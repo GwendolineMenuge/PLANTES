@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
             img.alt = plante.nom;
 
             li.innerHTML = `<strong>${plante.nom}</strong><br>
-                            <p>${plante.desc}</p>;
+                            <p>${plante.desc}</p>
+                            <button class="delete" data-index="${index}">❌</button>`;
             li.prepend(img);  // Insérer l'image avant le texte
             plantesList.appendChild(li);
         });
