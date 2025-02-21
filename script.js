@@ -25,8 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
         plantesList.innerHTML = "";
         plantes.forEach((plante, index) => {
             const li = document.createElement("li");
-            li.innerHTML = `<strong>${plante.nom}</strong><br>${plante.desc} 
-                <button class="delete" data-index="${index}">❌</button>`;
+            const img = document.createElement("img");
+            img.src = plante.image; // Ajout de l'image
+            img.alt = plante.nom;
+
+            li.innerHTML = `<strong>${plante.nom}</strong><br>
+                            <p>${plante.desc}</p>
+                            <button class="delete" data-index="${index}">❌</button>`;
+            li.prepend(img);  // Insérer l'image avant le texte
             plantesList.appendChild(li);
         });
     }
@@ -35,39 +41,24 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         const nom = document.getElementById("planteNom").value;
         const desc = document.getElementById("planteDesc").value;
+        const image = document.getElementById("planteImage").files[0];
 
-        plantes.push({ nom, desc });
-        localStorage.setItem("plantes", JSON.stringify(plantes));
-        renderPlantes();
-        planteForm.reset();
-    });
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            plantes.push({ 
+                nom, 
+                desc, 
+                image: reader.result // Stocker l'image en base64
+            });
+            localStorage.setItem("plantes", JSON.stringify(plantes));
+            renderPlantes();
+            planteForm.reset();
+        };
 
-    // Gestion des Potions
-    const potionForm = document.getElementById("potionForm");
-    const potionsList = document.getElementById("potions-list");
-    let potions = JSON.parse(localStorage.getItem("potions")) || [];
-
-    function renderPotions() {
-        potionsList.innerHTML = "";
-        potions.forEach((potion, index) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<strong>${potion.nom}</strong><br>${potion.desc} 
-                <button class="delete" data-index="${index}">❌</button>`;
-            potionsList.appendChild(li);
-        });
-    }
-
-    potionForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const nom = document.getElementById("potionNom").value;
-        const desc = document.getElementById("potionDesc").value;
-
-        potions.push({ nom, desc });
-        localStorage.setItem("potions", JSON.stringify(potions));
-        renderPotions();
-        potionForm.reset();
+        if (image) {
+            reader.readAsDataURL(image); // Convertir l'image en base64
+        }
     });
 
     renderPlantes();
-    renderPotions();
 });
