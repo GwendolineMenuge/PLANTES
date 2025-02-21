@@ -1,36 +1,82 @@
+/* Styles globaux */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
+    background: url('https://source.unsplash.com/1600x900/?forest') no-repeat center center/cover;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* En-tête */
+header {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+
+h1 {
+    margin: 10px 0;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+nav button {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+nav button:hover {
+    background: #2ecc71;
+}
+
+/* Contenu */
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.6);
     padding: 20px;
+    border-radius: 10px;
 }
 
-h1, h2 {
-    color: #2c3e50;
-}
-
+/* Formulaires */
 form {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 input, textarea {
-    width: 80%;
     padding: 10px;
-    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
 }
 
 button {
     padding: 10px;
-    background-color: #27ae60;
+    background: #e67e22;
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #2ecc71;
+    background: #d35400;
 }
 
+/* Listes */
 ul {
     list-style: none;
     padding: 0;
@@ -38,10 +84,10 @@ ul {
 
 li {
     background: white;
+    color: black;
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
@@ -53,4 +99,13 @@ li {
     color: white;
     border: none;
     cursor: pointer;
+}
+
+/* Onglets */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
 }
