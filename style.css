@@ -23,9 +23,37 @@ h2 {
     padding: 20px;
 }
 
-.add-plant,
-.plant-list {
-    margin-bottom: 30px;
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.tablink {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+
+.tablink:hover {
+    background-color: #45a049;
+}
+
+.tablink.active {
+    background-color: #45a049;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 input[type="text"],
@@ -52,7 +80,7 @@ button:hover {
     background-color: #45a049;
 }
 
-.plant-item {
+.plant-item, .potion-item {
     background-color: white;
     padding: 20px;
     margin-bottom: 20px;
@@ -66,12 +94,11 @@ button:hover {
     border-radius: 8px;
 }
 
-.plant-item h3 {
+.plant-item h3, .potion-item h3 {
     text-align: center;
     color: #4CAF50;
 }
 
-.plant-item p {
+.plant-item p, .potion-item p {
     text-align: justify;
 }
-
