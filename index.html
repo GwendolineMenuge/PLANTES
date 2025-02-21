@@ -13,29 +13,56 @@
         <h1>Recensement des Plantes et Potions</h1>
     </header>
 
-    <div class="container">
-        <div class="add-plant">
-            <h2>Ajouter une plante</h2>
-            <form id="add-plant-form">
-                <label for="name">Nom de la plante:</label>
-                <input type="text" id="name" name="name" required>
+    <div class="tabs">
+        <button class="tablink" onclick="openTab(event, 'addPlant')">Ajouter une plante</button>
+        <button class="tablink" onclick="openTab(event, 'addPotion')">Ajouter une potion</button>
+        <button class="tablink" onclick="openTab(event, 'viewPlants')">Afficher les plantes</button>
+        <button class="tablink" onclick="openTab(event, 'viewPotions')">Afficher les potions</button>
+    </div>
 
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" required></textarea>
+    <div id="addPlant" class="tabcontent">
+        <h2>Ajouter une plante</h2>
+        <form id="add-plant-form">
+            <label for="name">Nom de la plante:</label>
+            <input type="text" id="name" name="name" required>
 
-                <label for="image_url">Image (URL):</label>
-                <input type="url" id="image_url" name="image_url" required>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
 
-                <label for="care">Soins:</label>
-                <textarea id="care" name="care" required></textarea>
+            <label for="image_url">Image (URL):</label>
+            <input type="url" id="image_url" name="image_url" required>
 
-                <button type="submit">Ajouter la plante</button>
-            </form>
-        </div>
+            <label for="care">Soins:</label>
+            <textarea id="care" name="care" required></textarea>
 
-        <div class="plant-list" id="plant-list">
-            <!-- Les plantes seront ajoutées ici -->
-        </div>
+            <button type="submit">Ajouter la plante</button>
+        </form>
+    </div>
+
+    <div id="addPotion" class="tabcontent">
+        <h2>Ajouter une potion</h2>
+        <form id="add-potion-form">
+            <label for="potion-name">Nom de la potion:</label>
+            <input type="text" id="potion-name" name="name" required>
+
+            <label for="potion-description">Description:</label>
+            <textarea id="potion-description" name="description" required></textarea>
+
+            <label for="potion-ingredients">Ingrédients:</label>
+            <textarea id="potion-ingredients" name="ingredients" required></textarea>
+
+            <button type="submit">Ajouter la potion</button>
+        </form>
+    </div>
+
+    <div id="viewPlants" class="tabcontent">
+        <h2>Liste des plantes</h2>
+        <div class="plant-list" id="plant-list"></div>
+    </div>
+
+    <div id="viewPotions" class="tabcontent">
+        <h2>Liste des potions</h2>
+        <div class="potion-list" id="potion-list"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -44,3 +71,4 @@
 </body>
 
 </html>
+
