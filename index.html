@@ -3,54 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 Recensement de Plantes et Potions 🍵</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Recensement de Plantes et Potions</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>🌿 Recensement Plantes & Potions 🍵</h1>
+        <h1>Recensement de Plantes et Potions</h1>
         <nav>
-            <button class="tab-btn" data-tab="plantes">🌱 Plantes</button>
-            <button class="tab-btn" data-tab="ajoutPlante">➕ Ajouter Plante</button>
-            <button class="tab-btn" data-tab="potions">🧪 Potions</button>
-            <button class="tab-btn" data-tab="ajoutPotion">➕ Ajouter Potion</button>
+            <ul>
+                <li><button class="tab-btn" data-tab="ajout-plante">Ajouter Plante</button></li>
+                <li><button class="tab-btn" data-tab="afficher-plantes">Afficher Plantes</button></li>
+                <li><button class="tab-btn" data-tab="ajout-potion">Ajouter Potion</button></li>
+                <li><button class="tab-btn" data-tab="afficher-potions">Afficher Potions</button></li>
+            </ul>
         </nav>
     </header>
 
     <main>
-        <section id="plantes" class="tab-content">
-            <h2>🌿 Liste des Plantes</h2>
+        <!-- Ajouter une plante -->
+        <section id="ajout-plante" class="tab-content">
+            <h2>➕ Ajouter une Plante</h2>
+            <form id="planteForm" enctype="multipart/form-data">
+                <input type="text" id="planteNom" placeholder="Nom de la plante" required>
+                <textarea id="planteDesc" placeholder="Description de la plante" required></textarea>
+                <input type="file" id="planteImage" accept="image/*" required>
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- Afficher les plantes -->
+        <section id="afficher-plantes" class="tab-content">
+            <h2>📜 Liste des Plantes</h2>
             <ul id="plantes-list"></ul>
         </section>
 
-        <section id="ajoutPlante" class="tab-content">
-            <h2>➕ Ajouter une Plante</h2>
-            <form id="planteForm">
-                <input type="text" id="planteNom" placeholder="Nom de la plante" required>
-                <textarea id="planteDesc" placeholder="Description" required></textarea>
-                <button type="submit">Ajouter</button>
-            </form>
-        </section>
-
-        <section id="potions" class="tab-content">
-            <h2>🧪 Liste des Potions & Soins</h2>
-            <ul id="potions-list"></ul>
-        </section>
-
-        <section id="ajoutPotion" class="tab-content">
+        <!-- Ajouter une potion -->
+        <section id="ajout-potion" class="tab-content">
             <h2>➕ Ajouter une Potion</h2>
             <form id="potionForm">
                 <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-                <textarea id="potionDesc" placeholder="Effet & recette" required></textarea>
+                <textarea id="potionDesc" placeholder="Description de la potion" required></textarea>
                 <button type="submit">Ajouter</button>
             </form>
+        </section>
+
+        <!-- Afficher les potions -->
+        <section id="afficher-potions" class="tab-content">
+            <h2>📜 Liste des Potions</h2>
+            <ul id="potions-list"></ul>
         </section>
     </main>
 
     <script src="script.js"></script>
 </body>
-</html>
-
-</body>
-
 </html>
