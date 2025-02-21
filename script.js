@@ -1,6 +1,6 @@
 // Connexion à Supabase
-const supabaseUrl = "TON_URL_SUPABASE"; // Remplace par ton URL Supabase
-const supabaseKey = "TA_CLE_API"; // Remplace par ta clé publique (anon)
+const supabaseUrl = "https://pjmobokqnprbocvuiqmc.supabase.co"; // Remplace par ton URL Supabase
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqbW9ib2txbnByYm9jdnVpcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNzYyMDYsImV4cCI6MjA1NTc1MjIwNn0.uwiTLtBP00-v2Ce-MStb3dajDvfUxSeMufwilMg7kP8"; // Remplace par ta clé publique (anon)
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // Affichage dynamique des onglets
