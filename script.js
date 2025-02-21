@@ -97,4 +97,3 @@ let potions = [];
 // Affichage initial (si tu veux commencer avec des plantes et potions prédéfinies)
 afficherPlantes(plantes);
 afficherPotions(potions);
-
