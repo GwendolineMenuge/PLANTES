@@ -1,41 +1,66 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("addForm");
-    const list = document.getElementById("list");
+    const tabs = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
 
-    // Charger les données stockées
-    let items = JSON.parse(localStorage.getItem("plantes")) || [];
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            contents.forEach(content => content.classList.remove("active"));
+            document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+    });
 
-    function renderList() {
-        list.innerHTML = "";
-        items.forEach((item, index) => {
+    // Gestion des plantes
+    const planteForm = document.getElementById("planteForm");
+    const plantesList = document.getElementById("plantes-list");
+    let plantes = JSON.parse(localStorage.getItem("plantes")) || [];
+
+    function renderPlantes() {
+        plantesList.innerHTML = "";
+        plantes.forEach((plante, index) => {
             const li = document.createElement("li");
-            li.innerHTML = `<strong>${item.name}</strong><br>${item.description} 
+            li.innerHTML = `<strong>${plante.nom}</strong><br>${plante.desc} 
                 <button class="delete" data-index="${index}">❌</button>`;
-            list.appendChild(li);
+            plantesList.appendChild(li);
         });
     }
 
-    form.addEventListener("submit", (event) => {
+    planteForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        const name = document.getElementById("name").value;
-        const description = document.getElementById("description").value;
+        const nom = document.getElementById("planteNom").value;
+        const desc = document.getElementById("planteDesc").value;
 
-        if (name && description) {
-            items.push({ name, description });
-            localStorage.setItem("plantes", JSON.stringify(items));
-            renderList();
-            form.reset();
-        }
+        plantes.push({ nom, desc });
+        localStorage.setItem("plantes", JSON.stringify(plantes));
+        renderPlantes();
+        planteForm.reset();
     });
 
-    list.addEventListener("click", (event) => {
-        if (event.target.classList.contains("delete")) {
-            const index = event.target.getAttribute("data-index");
-            items.splice(index, 1);
-            localStorage.setItem("plantes", JSON.stringify(items));
-            renderList();
-        }
+    // Gestion des potions
+    const potionForm = document.getElementById("potionForm");
+    const potionsList = document.getElementById("potions-list");
+    let potions = JSON.parse(localStorage.getItem("potions")) || [];
+
+    function renderPotions() {
+        potionsList.innerHTML = "";
+        potions.forEach((potion, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>${potion.nom}</strong><br>${potion.desc} 
+                <button class="delete" data-index="${index}">❌</button>`;
+            potionsList.appendChild(li);
+        });
+    }
+
+    potionForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nom = document.getElementById("potionNom").value;
+        const desc = document.getElementById("potionDesc").value;
+
+        potions.push({ nom, desc });
+        localStorage.setItem("potions", JSON.stringify(potions));
+        renderPotions();
+        potionForm.reset();
     });
 
-    renderList();
+    renderPlantes();
+    renderPotions();
 });
