@@ -1,104 +1,122 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f9;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #3c6e71;
     color: white;
-    padding: 15px;
+    padding: 20px;
     text-align: center;
 }
 
-h2 {
-    color: #4CAF50;
+header h1 {
+    margin: 0;
+    font-size: 2em;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.tabs {
+nav ul {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
 }
 
-.tablink {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+nav ul li {
+    margin: 0 10px;
+}
+
+nav button {
+    background-color: #6b8e23;
     border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 1em;
     cursor: pointer;
-    flex: 1;
-    text-align: center;
+    border-radius: 5px;
 }
 
-.tablink:hover {
-    background-color: #45a049;
+nav button:hover {
+    background-color: #556b2f;
 }
 
-.tablink.active {
-    background-color: #45a049;
-}
-
-.tabcontent {
+.tab-content {
     display: none;
     padding: 20px;
     background-color: white;
-    margin-top: 10px;
-    border-radius: 8px;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 600px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"],
-input[type="url"],
-textarea {
+.tab-content.active {
+    display: block;
+}
+
+input[type="text"], textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 button {
+    padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
+}
+
+button[type="submit"] {
+    background-color: #2e8b57;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-.plant-item, .potion-item {
-    background-color: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.plant-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.plant-item h3, .potion-item h3 {
-    text-align: center;
-    color: #4CAF50;
-}
-
-.plant-item p, .potion-item p {
+/* Justification du texte */
+.tab-content textarea, .tab-content p {
     text-align: justify;
+}
+
+/* Style des plantes */
+#plantes-list {
+    list-style: none;
+    padding: 0;
+}
+
+#plantes-list li {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+
+#plantes-list img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+#plantes-list li strong {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+#plantes-list li button {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
 }
