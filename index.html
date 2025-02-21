@@ -18,30 +18,36 @@
     </header>
 
     <main>
+        <!-- Affichage des plantes -->
         <section id="plantes" class="tab-content">
             <h2>🌿 Liste des Plantes</h2>
             <ul id="plantes-list"></ul>
         </section>
 
+        <!-- Formulaire d'ajout de plantes -->
         <section id="ajoutPlante" class="tab-content">
             <h2>➕ Ajouter une Plante</h2>
-            <form id="planteForm">
-                <input type="text" id="planteNom" placeholder="Nom de la plante" required>
-                <textarea id="planteDesc" placeholder="Description" required></textarea>
+            <form id="planteForm" action="ajout_plante.php" method="POST" enctype="multipart/form-data">
+                <input type="text" id="planteNom" name="planteNom" placeholder="Nom de la plante" required>
+                <textarea id="planteDesc" name="planteDesc" placeholder="Description" required></textarea>
+                <input type="file" id="planteImage" name="planteImage" accept="image/*" required>
                 <button type="submit">Ajouter</button>
             </form>
         </section>
 
+        <!-- Affichage des potions -->
         <section id="potions" class="tab-content">
             <h2>🧪 Liste des Potions & Soins</h2>
             <ul id="potions-list"></ul>
         </section>
 
+        <!-- Formulaire d'ajout de potions -->
         <section id="ajoutPotion" class="tab-content">
             <h2>➕ Ajouter une Potion</h2>
-            <form id="potionForm">
-                <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-                <textarea id="potionDesc" placeholder="Effet & recette" required></textarea>
+            <form id="potionForm" action="ajout_potion.php" method="POST">
+                <input type="text" id="potionNom" name="potionNom" placeholder="Nom de la potion" required>
+                <textarea id="potionDesc" name="potionDesc" placeholder="Effet & recette" required></textarea>
+                <input type="text" id="potionIngredients" name="potionIngredients" placeholder="Ingrédients" required>
                 <button type="submit">Ajouter</button>
             </form>
         </section>
@@ -50,4 +56,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
