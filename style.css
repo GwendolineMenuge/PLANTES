@@ -1,111 +1,72 @@
-/* Styles globaux */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: url('https://source.unsplash.com/1600x900/?forest') no-repeat center center/cover;
+    background: url('assets/background.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: white;
     margin: 0;
     padding: 0;
 }
 
-/* En-tête */
 header {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
 }
 
 h1 {
-    margin: 10px 0;
+    margin: 0;
 }
 
-/* Navigation */
 nav {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
-nav button {
-    background: #27ae60;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    border-radius: 5px;
-}
-
-nav button:hover {
-    background: #2ecc71;
-}
-
-/* Contenu */
-main {
-    max-width: 600px;
-    margin: 20px auto;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* Formulaires */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-input, textarea {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
+    margin-top: 10px;
 }
 
 button {
     padding: 10px;
-    background: #e67e22;
-    color: white;
+    margin: 5px;
     border: none;
     cursor: pointer;
+    font-size: 16px;
     border-radius: 5px;
 }
 
-button:hover {
-    background: #d35400;
-}
-
-/* Listes */
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    background: white;
-    color: black;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    position: relative;
-}
-
-.delete {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background: red;
+.tab-btn {
+    background: #3498db;
     color: white;
-    border: none;
-    cursor: pointer;
 }
 
-/* Onglets */
+.tab-btn.active {
+    background: #2ecc71;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .tab-content {
     display: none;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin-top: 20px;
 }
 
 .tab-content.active {
     display: block;
+}
+
+form input, form textarea {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background: #2ecc71;
+    color: white;
 }
