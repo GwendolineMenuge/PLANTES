@@ -1,76 +1,61 @@
+/* style.css */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    color: #333;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
-    padding: 1rem;
     text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
 }
 
 nav {
-    margin-top: 1rem;
+    margin-top: 10px;
 }
 
 .tab-btn {
+    background-color: #fff;
+    color: #4caf50;
+    border: 1px solid #4caf50;
     padding: 10px 20px;
     margin: 5px;
-    background-color: #ffffff;
-    border: none;
     cursor: pointer;
-    font-size: 1rem;
-    color: #4CAF50;
+    font-size: 1.2em;
 }
 
 .tab-btn:hover {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
-}
-
-main {
-    margin: 2rem;
-}
-
-h2 {
-    color: #4CAF50;
 }
 
 .tab-content {
     display: none;
+    padding: 20px;
 }
 
-.tab-content.active {
-    display: block;
+#plantes-list, #potions-list {
+    list-style-type: none;
+    padding: 0;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: 0 auto;
-}
-
-input[type="text"], textarea {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-textarea {
-    resize: vertical;
+#plantes-list li, #potions-list li {
+    margin-bottom: 15px;
 }
 
 button {
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -78,26 +63,14 @@ button:hover {
     background-color: #45a049;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 20px;
+form input, form textarea {
+    width: 100%;
     padding: 10px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-img {
-    max-width: 100px;
-    height: auto;
-    margin-right: 10px;
-}
-
-h3 {
-    font-size: 1.2rem;
-    margin: 0;
+form input[type="file"] {
+    padding: 5px;
 }
