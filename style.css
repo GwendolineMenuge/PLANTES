@@ -1,16 +1,17 @@
+/* Style de base pour l'application */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background: url('assets/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f9;
 }
 
 header {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    background-color: #388e3c;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
 }
 
 h1 {
@@ -18,56 +19,89 @@ h1 {
 }
 
 nav {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-button {
-    padding: 10px;
-    margin: 5px;
+.tab-btn {
+    background-color: #4caf50;
     border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
 }
 
-.tab-btn {
-    background: #3498db;
-    color: white;
-}
-
 .tab-btn.active {
-    background: #2ecc71;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: #2c6f2d;
 }
 
 .tab-content {
     display: none;
-    background: rgba(0, 0, 0, 0.7);
     padding: 20px;
-    border-radius: 10px;
-    width: 80%;
     margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .tab-content.active {
     display: block;
 }
 
-form input, form textarea {
-    width: 90%;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"], textarea {
     padding: 10px;
-    margin: 5px 0;
-    border: none;
+    font-size: 16px;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-button[type="submit"] {
-    background: #2ecc71;
-    color: white;
+textarea {
+    resize: vertical;
 }
 
+button {
+    padding: 10px 20px;
+    background-color: #388e3c;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2c6f2d;
+}
+
+#plantes-list, #potions-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#plantes-list li, #potions-list li {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    max-width: 100px;
+    margin-top: 10px;
+    display: block;
+}
+
+#ajout-plante, #ajout-potion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
