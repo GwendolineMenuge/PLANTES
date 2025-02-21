@@ -25,12 +25,12 @@ function trierListeParNom(liste) {
     });
 }
 
-// Affichage de la liste des plantes
+// Fonction d'affichage des plantes
 function afficherPlantes(plantes) {
     const plantesList = document.getElementById('plantes-list');
     plantesList.innerHTML = ''; // Vide la liste existante
-    const plantesTriees = trierListeParNom(plantes);
-    
+    const plantesTriees = trierListeParNom(plantes);  // Trie la liste des plantes
+
     plantesTriees.forEach(plante => {
         const li = document.createElement('li');
         li.textContent = `${plante.nom} - ${plante.description}`;
@@ -38,12 +38,12 @@ function afficherPlantes(plantes) {
     });
 }
 
-// Affichage de la liste des potions
+// Fonction d'affichage des potions
 function afficherPotions(potions) {
     const potionsList = document.getElementById('potions-list');
     potionsList.innerHTML = ''; // Vide la liste existante
-    const potionsTriees = trierListeParNom(potions);
-    
+    const potionsTriees = trierListeParNom(potions); // Trie la liste des potions
+
     potionsTriees.forEach(potion => {
         const li = document.createElement('li');
         li.textContent = `${potion.nom} - ${potion.description}`;
@@ -51,57 +51,48 @@ function afficherPotions(potions) {
     });
 }
 
-// Gestion du formulaire de plante
+// Fonction d'ajout de plante via le formulaire
 document.getElementById('planteForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    event.preventDefault();  // Empêche le rafraîchissement de la page
 
     const planteNom = document.getElementById('planteNom').value;
     const planteDesc = document.getElementById('planteDesc').value;
 
     const plante = { nom: planteNom, description: planteDesc };
     
-    // Ajouter la plante dans une liste fictive (simule une base de données)
+    // Ajouter la plante à la liste (sans base de données pour l'instant)
     plantes.push(plante);
     
-    // Rafraîchir l'affichage de la liste
+    // Rafraîchir l'affichage après ajout
     afficherPlantes(plantes);
-    
+
     // Réinitialiser le formulaire
     event.target.reset();
 });
 
-// Gestion du formulaire de potion
+// Fonction d'ajout de potion via le formulaire
 document.getElementById('potionForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    event.preventDefault();  // Empêche le rafraîchissement de la page
 
     const potionNom = document.getElementById('potionNom').value;
     const potionDesc = document.getElementById('potionDesc').value;
 
     const potion = { nom: potionNom, description: potionDesc };
     
-    // Ajouter la potion dans une liste fictive (simule une base de données)
+    // Ajouter la potion à la liste (sans base de données pour l'instant)
     potions.push(potion);
     
-    // Rafraîchir l'affichage de la liste
+    // Rafraîchir l'affichage après ajout
     afficherPotions(potions);
-    
+
     // Réinitialiser le formulaire
     event.target.reset();
 });
 
-// Liste fictive de plantes et potions (simule une base de données)
-const plantes = [
-    { nom: "Aloe Vera", description: "Plante médicinale apaisante." },
-    { nom: "Menthe", description: "Plante aromatique utilisée pour les tisanes." },
-    { nom: "Camomille", description: "Utilisée pour calmer les troubles digestifs." }
-];
+// Liste vide de plantes et potions (simulation de base de données)
+let plantes = [];
+let potions = [];
 
-const potions = [
-    { nom: "Potion de guérison", description: "Restaure la santé." },
-    { nom: "Elixir de sagesse", description: "Augmente la concentration." },
-    { nom: "Potion de rapidité", description: "Permet d'augmenter la vitesse." }
-];
-
-// Affichage initial des plantes et potions
+// Affichage initial (si tu veux commencer avec des plantes et potions prédéfinies)
 afficherPlantes(plantes);
 afficherPotions(potions);
