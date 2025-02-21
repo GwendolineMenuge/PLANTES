@@ -2,14 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabs = document.querySelectorAll(".tab-btn");
     const contents = document.querySelectorAll(".tab-content");
 
+    // Activation de l'onglet par défaut
+    document.querySelector(".tab-content").classList.add("active");
+
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
             contents.forEach(content => content.classList.remove("active"));
             document.getElementById(tab.dataset.tab).classList.add("active");
+
+            // Changer l'onglet actif
+            tabs.forEach(btn => btn.classList.remove("active"));
+            tab.classList.add("active");
         });
     });
 
-    // Gestion des plantes
+    // Gestion des Plantes
     const planteForm = document.getElementById("planteForm");
     const plantesList = document.getElementById("plantes-list");
     let plantes = JSON.parse(localStorage.getItem("plantes")) || [];
@@ -35,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         planteForm.reset();
     });
 
-    // Gestion des potions
+    // Gestion des Potions
     const potionForm = document.getElementById("potionForm");
     const potionsList = document.getElementById("potions-list");
     let potions = JSON.parse(localStorage.getItem("potions")) || [];
