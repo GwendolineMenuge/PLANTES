@@ -9,13 +9,15 @@ const tabContents = document.querySelectorAll('.tab-content');
 
 // Fonction pour afficher un onglet en fonction de l'id
 function showTab(tabId) {
+    // Cacher tous les onglets
     tabContents.forEach(tab => {
-        tab.style.display = 'none';  // Cacher tous les onglets
+        tab.style.display = 'none';
     });
 
+    // Afficher l'onglet sélectionné
     const activeTab = document.getElementById(tabId);
     if (activeTab) {
-        activeTab.style.display = 'block';  // Afficher l'onglet actif
+        activeTab.style.display = 'block';
     }
 }
 
@@ -101,5 +103,3 @@ async function afficherPlantes() {
 
 // Initialisation de la liste des plantes au chargement de la page
 document.addEventListener('DOMContentLoaded', afficherPlantes);
-
-
