@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌿 Recensement de Plantes et Potions 🍵</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
 </head>
 <body>
     <header>
@@ -29,26 +28,9 @@
             <form id="planteForm">
                 <input type="text" id="planteNom" placeholder="Nom de la plante" required>
                 <textarea id="planteDesc" placeholder="Description" required></textarea>
-                <input type="file" id="planteImage" accept="image/*" required>
+                <input type="file" id="planteImage" required>
                 <button type="submit">Ajouter</button>
             </form>
         </section>
 
-        <section id="potions" class="tab-content">
-            <h2>🧪 Liste des Potions & Soins</h2>
-            <ul id="potions-list"></ul>
-        </section>
-
-        <section id="ajoutPotion" class="tab-content">
-            <h2>➕ Ajouter une Potion</h2>
-            <form id="potionForm">
-                <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-                <textarea id="potionDesc" placeholder="Effet & recette" required></textarea>
-                <button type="submit">Ajouter</button>
-            </form>
-        </section>
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        <section id="potions" class
