@@ -10,7 +10,8 @@ tabs.forEach(tab => {
 
         // Ajouter la classe active au bouton et contenu cliqué
         tab.classList.add('active');
-        document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+        const tabContent = document.getElementById(tab.getAttribute('data-tab'));
+        tabContent.classList.add('active');
     });
 });
 
@@ -96,3 +97,4 @@ let potions = [];
 // Affichage initial (si tu veux commencer avec des plantes et potions prédéfinies)
 afficherPlantes(plantes);
 afficherPotions(potions);
+
