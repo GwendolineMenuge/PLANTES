@@ -3,6 +3,33 @@ const supabaseUrl = "TON_URL_SUPABASE"; // Remplace par ton URL Supabase
 const supabaseKey = "TA_CLE_API"; // Remplace par ta clé publique (anon)
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+// Affichage dynamique des onglets
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+// Fonction pour afficher l'onglet actif
+function showTab(tabId) {
+    tabContents.forEach(tab => {
+        tab.style.display = 'none';  // Cache tous les onglets
+    });
+
+    const activeTab = document.getElementById(tabId);
+    if (activeTab) {
+        activeTab.style.display = 'block';  // Affiche l'onglet actif
+    }
+}
+
+// Ajouter un événement sur chaque bouton pour changer d'onglet
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.getAttribute('data-tab');
+        showTab(tabId);  // Affiche l'onglet correspondant
+    });
+});
+
+// Par défaut, afficher le premier onglet
+showTab('plantes');
+
 // Gestion de l'ajout de plante avec image
 document.getElementById('planteForm').addEventListener('submit', async (e) => {
     e.preventDefault();
