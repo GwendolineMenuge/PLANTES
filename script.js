@@ -1,64 +1,119 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const tabs = document.querySelectorAll(".tab-btn");
-    const contents = document.querySelectorAll(".tab-content");
+// Connexion à Supabase
+const supabaseUrl = "TON_URL_SUPABASE"; // Remplace par ton URL Supabase
+const supabaseKey = "TA_CLE_API"; // Remplace par ta clé publique (anon)
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Activation de l'onglet par défaut
-    document.querySelector(".tab-content").classList.add("active");
+// Gestion de l'ajout de plante avec image
+document.getElementById('planteForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            contents.forEach(content => content.classList.remove("active"));
-            document.getElementById(tab.dataset.tab).classList.add("active");
+    const nom = document.getElementById('planteNom').value;
+    const description = document.getElementById('planteDesc').value;
+    const imageFile = document.getElementById('planteImage').files[0];
 
-            // Changer l'onglet actif
-            tabs.forEach(btn => btn.classList.remove("active"));
-            tab.classList.add("active");
-        });
-    });
+    // Télécharger l'image dans Supabase Storage
+    const { data, error: uploadError } = await supabase.storage
+        .from('plantes-images')  // Le nom du "bucket" d'images dans Supabase
+        .upload('plantes/' + imageFile.name, imageFile);
 
-    // Gestion des Plantes
-    const planteForm = document.getElementById("planteForm");
-    const plantesList = document.getElementById("plantes-list");
-    let plantes = JSON.parse(localStorage.getItem("plantes")) || [];
-
-    function renderPlantes() {
-        plantesList.innerHTML = "";
-        plantes.forEach((plante, index) => {
-            const li = document.createElement("li");
-            const img = document.createElement("img");
-            img.src = plante.image; // Ajout de l'image
-            img.alt = plante.nom;
-
-            li.innerHTML = `<strong>${plante.nom}</strong><br>
-                            <p>${plante.desc}</p>
-                            <button class="delete" data-index="${index}">❌</button>`;
-            li.prepend(img);  // Insérer l'image avant le texte
-            plantesList.appendChild(li);
-        });
+    if (uploadError) {
+        console.error('Erreur de téléchargement de l\'image:', uploadError);
+        return;
     }
 
-    planteForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const nom = document.getElementById("planteNom").value;
-        const desc = document.getElementById("planteDesc").value;
-        const image = document.getElementById("planteImage").files[0];
+    // Obtenir l'URL de l'image téléchargée
+    const imageUrl = data.path;
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            plantes.push({ 
-                nom, 
-                desc, 
-                image: reader.result // Stocker l'image en base64
-            });
-            localStorage.setItem("plantes", JSON.stringify(plantes));
-            renderPlantes();
-            planteForm.reset();
-        };
+    // Ajouter les données de la plante dans la base de données
+    const { data: insertedData, error: insertError } = await supabase
+        .from('plantes')
+        .insert([
+            { nom, description, image_url: imageUrl }
+        ]);
 
-        if (image) {
-            reader.readAsDataURL(image); // Convertir l'image en base64
-        }
-    });
-
-    renderPlantes();
+    if (insertError) {
+        console.error('Erreur d\'insertion dans la base de données:', insertError);
+    } else {
+        console.log('Plante ajoutée avec succès:', insertedData);
+        afficherPlantes(); // Rafraîchir la liste des plantes après ajout
+    }
 });
+
+// Afficher les plantes
+async function afficherPlantes() {
+    const { data: plantes, error } = await supabase
+        .from('plantes')
+        .select('*')
+        .order('nom', { ascending: true }); // Tri par nom
+
+    if (error) {
+        console.error('Erreur lors de la récupération des plantes:', error);
+        return;
+    }
+
+    const plantesList = document.getElementById('plantes-list');
+    plantesList.innerHTML = ''; // Réinitialiser la liste
+
+    plantes.forEach(plante => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <h3>${plante.nom}</h3>
+            <img src="https://your-project-url.supabase.co/storage/v1/object/public/plantes-images/${plante.image_url}" alt="${plante.nom}">
+            <p>${plante.description}</p>
+        `;
+        plantesList.appendChild(li);
+    });
+}
+
+// Appel de la fonction pour afficher les plantes dès le chargement de la page
+afficherPlantes();
+
+// Gestion de l'ajout de potion
+document.getElementById('potionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nom = document.getElementById('potionNom').value;
+    const description = document.getElementById('potionDesc').value;
+
+    // Ajouter la potion dans la base de données
+    const { data: insertedPotion, error: insertPotionError } = await supabase
+        .from('potions')
+        .insert([
+            { nom, description }
+        ]);
+
+    if (insertPotionError) {
+        console.error('Erreur d\'insertion de la potion dans la base de données:', insertPotionError);
+    } else {
+        console.log('Potion ajoutée avec succès:', insertedPotion);
+        afficherPotions(); // Rafraîchir la liste des potions après ajout
+    }
+});
+
+// Afficher les potions
+async function afficherPotions() {
+    const { data: potions, error } = await supabase
+        .from('potions')
+        .select('*')
+        .order('nom', { ascending: true }); // Tri par nom
+
+    if (error) {
+        console.error('Erreur lors de la récupération des potions:', error);
+        return;
+    }
+
+    const potionsList = document.getElementById('potions-list');
+    potionsList.innerHTML = ''; // Réinitialiser la liste
+
+    potions.forEach(potion => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <h3>${potion.nom}</h3>
+            <p>${potion.description}</p>
+        `;
+        potionsList.appendChild(li);
+    });
+}
+
+// Appel de la fonction pour afficher les potions dès le chargement de la page
+afficherPotions();
