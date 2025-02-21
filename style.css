@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #f4f4f9;
+    color: #333;
     margin: 0;
     padding: 0;
 }
@@ -12,58 +13,65 @@ header {
     text-align: center;
 }
 
-nav ul {
-    list-style-type: none;
-    padding: 0;
+h2 {
+    color: #4CAF50;
 }
 
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-section {
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    margin: 20px;
 }
 
-#plants-list, #potions-list {
-    display: flex;
-    flex-wrap: wrap;
+.add-plant,
+.plant-list {
+    margin-bottom: 30px;
 }
 
-.plant-item, .potion-item {
-    width: 30%;
-    margin: 15px;
-    background-color: white;
+input[type="text"],
+input[type="url"],
+textarea {
+    width: 100%;
     padding: 10px;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.plant-item {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-img {
-    width: 100%;
+.plant-item img {
+    max-width: 100%;
     height: auto;
+    border-radius: 8px;
 }
 
-form input, form textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+.plant-item h3 {
+    text-align: center;
+    color: #4CAF50;
 }
 
-form button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
+.plant-item p {
+    text-align: justify;
 }
+
