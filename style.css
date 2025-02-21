@@ -1,20 +1,16 @@
-/* Style de base pour le corps */
+/* Style global */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    background-color: #f5f5f5;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
-}
-
-h1 {
-    margin: 0;
 }
 
 nav {
@@ -22,102 +18,80 @@ nav {
 }
 
 .tab-btn {
-    padding: 10px;
-    background-color: #f0f0f0;
-    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #fff;
+    border: 1px solid #4caf50;
+    color: #4caf50;
     cursor: pointer;
-    font-size: 16px;
-    margin: 0 5px;
 }
 
 .tab-btn.active {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
 }
 
-/* Masquer toutes les sections au départ */
 .tab-content {
     display: none;
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
-/* Afficher la section active */
 .tab-content.active {
     display: block;
 }
 
-/* Style pour les formulaires et autres éléments */
 form {
-    margin-top: 10px;
-    background-color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
-input[type="text"], textarea {
-    padding: 8px;
-    width: 100%;
-    margin: 5px 0;
+form input, form textarea {
+    padding: 10px;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
+    padding: 10px;
+    background-color: #4caf50;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-/* Style pour la liste des plantes et potions */
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 li {
-    padding: 8px;
-    background-color: white;
-    margin: 5px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
 }
 
-/* Style pour le tableau de données */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #4caf50;
 }
 
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-td {
-    background-color: #f9f9f9;
-}
-
-/* Style de l'alerte */
-.alert {
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #f9c2c2;
-    color: #d8000c;
-    border: 1px solid #d8000c;
-    border-radius: 5px;
+p {
+    color: #333;
 }
