@@ -3,7 +3,6 @@ const supabaseUrl = "https://pjmobokqnprbocvuiqmc.supabase.co"; // Remplace par 
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqbW9ib2txbnByYm9jdnVpcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNzYyMDYsImV4cCI6MjA1NTc1MjIwNn0.uwiTLtBP00-v2Ce-MStb3dajDvfUxSeMufwilMg7kP8"; // Remplace par ta clé publique (anon)
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Affichage dynamique des onglets
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 
@@ -27,8 +26,10 @@ tabButtons.forEach(button => {
     });
 });
 
-// Par défaut, afficher le premier onglet
-showTab('plantes');
+// Par défaut, afficher le premier onglet (plantes)
+document.addEventListener('DOMContentLoaded', () => {
+    showTab('plantes');
+});
 
 // Gestion de l'ajout de plante avec image
 document.getElementById('planteForm').addEventListener('submit', async (e) => {
@@ -85,62 +86,5 @@ async function afficherPlantes() {
         const li = document.createElement('li');
         li.innerHTML = `
             <h3>${plante.nom}</h3>
-            <img src="https://your-project-url.supabase.co/storage/v1/object/public/plantes-images/${plante.image_url}" alt="${plante.nom}">
-            <p>${plante.description}</p>
-        `;
-        plantesList.appendChild(li);
-    });
-}
+            <img src="https://your-project-url.supabase.co
 
-// Appel de la fonction pour afficher les plantes dès le chargement de la page
-afficherPlantes();
-
-// Gestion de l'ajout de potion
-document.getElementById('potionForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const nom = document.getElementById('potionNom').value;
-    const description = document.getElementById('potionDesc').value;
-
-    // Ajouter la potion dans la base de données
-    const { data: insertedPotion, error: insertPotionError } = await supabase
-        .from('potions')
-        .insert([
-            { nom, description }
-        ]);
-
-    if (insertPotionError) {
-        console.error('Erreur d\'insertion de la potion dans la base de données:', insertPotionError);
-    } else {
-        console.log('Potion ajoutée avec succès:', insertedPotion);
-        afficherPotions(); // Rafraîchir la liste des potions après ajout
-    }
-});
-
-// Afficher les potions
-async function afficherPotions() {
-    const { data: potions, error } = await supabase
-        .from('potions')
-        .select('*')
-        .order('nom', { ascending: true }); // Tri par nom
-
-    if (error) {
-        console.error('Erreur lors de la récupération des potions:', error);
-        return;
-    }
-
-    const potionsList = document.getElementById('potions-list');
-    potionsList.innerHTML = ''; // Réinitialiser la liste
-
-    potions.forEach(potion => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <h3>${potion.nom}</h3>
-            <p>${potion.description}</p>
-        `;
-        potionsList.appendChild(li);
-    });
-}
-
-// Appel de la fonction pour afficher les potions dès le chargement de la page
-afficherPotions();
