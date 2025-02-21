@@ -1,99 +1,106 @@
-// Fonction pour basculer les onglets
-const tabs = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
+// Gestion des onglets
+document.querySelectorAll('.tab-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const tab = button.getAttribute('data-tab');
+        
+        // Changer d'onglet actif
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
 
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // Retirer la classe active de tous les boutons et contenus
-        tabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-
-        // Ajouter la classe active au bouton et contenu cliqué
-        tab.classList.add('active');
-        const tabContent = document.getElementById(tab.getAttribute('data-tab'));
-        tabContent.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(section => {
+            section.classList.remove('active');
+            if (section.id === tab) {
+                section.classList.add('active');
+            }
+        });
     });
 });
 
-// Fonction de tri par ordre alphabétique
-function trierListeParNom(liste) {
-    return liste.sort((a, b) => {
-        const nomA = a.nom.toLowerCase();
-        const nomB = b.nom.toLowerCase();
-        if (nomA < nomB) return -1;
-        if (nomA > nomB) return 1;
-        return 0;
-    });
-}
+// Fonction pour ajouter une plante à la liste
+document.getElementById("planteForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-// Fonction d'affichage des plantes
-function afficherPlantes(plantes) {
-    const plantesList = document.getElementById('plantes-list');
-    plantesList.innerHTML = ''; // Vide la liste existante
-    const plantesTriees = trierListeParNom(plantes);  // Trie la liste des plantes
+    // Récupérer les valeurs du formulaire
+    const nomPlante = document.getElementById("planteNom").value;
+    const descriptionPlante = document.getElementById("planteDesc").value;
+    const imagePlante = document.getElementById("planteImage").files[0];
 
-    plantesTriees.forEach(plante => {
-        const li = document.createElement('li');
-        li.textContent = `${plante.nom} - ${plante.description}`;
-        plantesList.appendChild(li);
-    });
-}
+    // Créer un objet FormData pour l'image
+    const formData = new FormData();
+    formData.append("image", imagePlante);
 
-// Fonction d'affichage des potions
-function afficherPotions(potions) {
-    const potionsList = document.getElementById('potions-list');
-    potionsList.innerHTML = ''; // Vide la liste existante
-    const potionsTriees = trierListeParNom(potions); // Trie la liste des potions
+    // Créer une URL locale pour l'image (à remplacer par un service de stockage si besoin)
+    const imageURL = URL.createObjectURL(imagePlante); // Simule une URL d'image locale
 
-    potionsTriees.forEach(potion => {
-        const li = document.createElement('li');
-        li.textContent = `${potion.nom} - ${potion.description}`;
-        potionsList.appendChild(li);
-    });
-}
+    // Ajouter la plante à la liste
+    const plante = {
+        nom: nomPlante,
+        description: descriptionPlante,
+        image: imageURL
+    };
 
-// Fonction d'ajout de plante via le formulaire
-document.getElementById('planteForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Empêche le rafraîchissement de la page
-
-    const planteNom = document.getElementById('planteNom').value;
-    const planteDesc = document.getElementById('planteDesc').value;
-
-    const plante = { nom: planteNom, description: planteDesc };
-    
-    // Ajouter la plante à la liste (sans base de données pour l'instant)
-    plantes.push(plante);
-    
-    // Rafraîchir l'affichage après ajout
-    afficherPlantes(plantes);
+    // Ajouter la plante à l'affichage
+    addPlanteToList(plante);
 
     // Réinitialiser le formulaire
-    event.target.reset();
+    document.getElementById("planteForm").reset();
 });
 
-// Fonction d'ajout de potion via le formulaire
-document.getElementById('potionForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Empêche le rafraîchissement de la page
+// Fonction pour ajouter une potion à la liste
+document.getElementById("potionForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    const potionNom = document.getElementById('potionNom').value;
-    const potionDesc = document.getElementById('potionDesc').value;
+    // Récupérer les valeurs du formulaire
+    const nomPotion = document.getElementById("potionNom").value;
+    const descriptionPotion = document.getElementById("potionDesc").value;
+    const imagePotion = document.getElementById("potionImage").files[0];
 
-    const potion = { nom: potionNom, description: potionDesc };
-    
-    // Ajouter la potion à la liste (sans base de données pour l'instant)
-    potions.push(potion);
-    
-    // Rafraîchir l'affichage après ajout
-    afficherPotions(potions);
+    // Créer un objet FormData pour l'image
+    const formData = new FormData();
+    formData.append("image", imagePotion);
+
+    // Créer une URL locale pour l'image (à remplacer par un service de stockage si besoin)
+    const imageURL = URL.createObjectURL(imagePotion); // Simule une URL d'image locale
+
+    // Ajouter la potion à la liste
+    const potion = {
+        nom: nomPotion,
+        description: descriptionPotion,
+        image: imageURL
+    };
+
+    // Ajouter la potion à l'affichage
+    addPotionToList(potion);
 
     // Réinitialiser le formulaire
-    event.target.reset();
+    document.getElementById("potionForm").reset();
 });
 
-// Liste vide de plantes et potions (simulation de base de données)
-let plantes = [];
-let potions = [];
+// Fonction pour afficher les plantes dans la liste
+function addPlanteToList(plante) {
+    const plantesList = document.getElementById("plantes-list");
+    const li = document.createElement("li");
 
-// Affichage initial (si tu veux commencer avec des plantes et potions prédéfinies)
-afficherPlantes(plantes);
-afficherPotions(potions);
+    li.innerHTML = `
+        <h3>${plante.nom}</h3>
+        <img src="${plante.image}" alt="${plante.nom}" width="100">
+        <p>${plante.description}</p>
+    `;
+    
+    plantesList.appendChild(li);
+}
+
+// Fonction pour afficher les potions dans la liste
+function addPotionToList(potion) {
+    const potionsList = document.getElementById("potions-list");
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+        <h3>${potion.nom}</h3>
+        <img src="${potion.image}" alt="${potion.nom}" width="100">
+        <p>${potion.description}</p>
+    `;
+    
+    potionsList.appendChild(li);
+}
+
