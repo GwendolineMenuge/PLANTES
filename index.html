@@ -3,57 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recensement de Plantes et Potions</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Recensement des Plantes et Potions</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
     <header>
-        <h1>Recensement de Plantes et Potions</h1>
+        <h1>Cinéma des Plantes et Potions</h1>
         <nav>
             <ul>
-                <li><button class="tab-btn" data-tab="ajout-plante">Ajouter Plante</button></li>
-                <li><button class="tab-btn" data-tab="afficher-plantes">Afficher Plantes</button></li>
-                <li><button class="tab-btn" data-tab="ajout-potion">Ajouter Potion</button></li>
-                <li><button class="tab-btn" data-tab="afficher-potions">Afficher Potions</button></li>
+                <li><a href="#" id="show-plants">Afficher les Plantes</a></li>
+                <li><a href="#" id="show-potions">Afficher les Potions</a></li>
+                <li><a href="#" id="add-plant">Ajouter une Plante</a></li>
+                <li><a href="#" id="add-potion">Ajouter une Potion</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <!-- Ajouter une plante -->
-        <section id="ajout-plante" class="tab-content">
-            <h2>➕ Ajouter une Plante</h2>
-            <form id="planteForm" enctype="multipart/form-data">
-                <input type="text" id="planteNom" placeholder="Nom de la plante" required>
-                <textarea id="planteDesc" placeholder="Description de la plante" required></textarea>
-                <input type="file" id="planteImage" accept="image/*" required>
-                <button type="submit">Ajouter</button>
-            </form>
-        </section>
+    <section id="plants-section">
+        <h2>Plantes</h2>
+        <div id="plants-list"></div>
+    </section>
 
-        <!-- Afficher les plantes -->
-        <section id="afficher-plantes" class="tab-content">
-            <h2>📜 Liste des Plantes</h2>
-            <ul id="plantes-list"></ul>
-        </section>
+    <section id="potions-section" style="display: none;">
+        <h2>Potions</h2>
+        <div id="potions-list"></div>
+    </section>
 
-        <!-- Ajouter une potion -->
-        <section id="ajout-potion" class="tab-content">
-            <h2>➕ Ajouter une Potion</h2>
-            <form id="potionForm">
-                <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-                <textarea id="potionDesc" placeholder="Description de la potion" required></textarea>
-                <button type="submit">Ajouter</button>
-            </form>
-        </section>
+    <section id="add-plant-section" style="display: none;">
+        <h2>Ajouter une Plante</h2>
+        <form id="add-plant-form">
+            <input type="text" id="plant-name" placeholder="Nom de la plante" required>
+            <textarea id="plant-description" placeholder="Description de la plante" required></textarea>
+            <input type="text" id="plant-image-url" placeholder="URL de l'image" required>
+            <textarea id="plant-care" placeholder="Soins de la plante" required></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
+    </section>
 
-        <!-- Afficher les potions -->
-        <section id="afficher-potions" class="tab-content">
-            <h2>📜 Liste des Potions</h2>
-            <ul id="potions-list"></ul>
-        </section>
-    </main>
+    <section id="add-potion-section" style="display: none;">
+        <h2>Ajouter une Potion</h2>
+        <form id="add-potion-form">
+            <input type="text" id="potion-name" placeholder="Nom de la potion" required>
+            <textarea id="potion-ingredients" placeholder="Ingrédients de la potion" required></textarea>
+            <textarea id="potion-description" placeholder="Description de la potion" required></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
+    </section>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
