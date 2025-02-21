@@ -1,17 +1,16 @@
-/* Style de base pour l'application */
+/* Style de base pour le corps */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: #f4f4f9;
 }
 
 header {
-    background-color: #388e3c;
+    background-color: #4CAF50;
     color: white;
+    padding: 10px;
     text-align: center;
-    padding: 20px 0;
 }
 
 h1 {
@@ -19,89 +18,106 @@ h1 {
 }
 
 nav {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .tab-btn {
-    background-color: #4caf50;
+    padding: 10px;
+    background-color: #f0f0f0;
     border: none;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
     cursor: pointer;
     font-size: 16px;
-    border-radius: 5px;
+    margin: 0 5px;
 }
 
 .tab-btn.active {
-    background-color: #2c6f2d;
+    background-color: #4CAF50;
+    color: white;
 }
 
+/* Masquer toutes les sections au départ */
 .tab-content {
     display: none;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Afficher la section active */
 .tab-content.active {
     display: block;
 }
 
+/* Style pour les formulaires et autres éléments */
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin-top: 10px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 input[type="text"], textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
+    padding: 8px;
+    width: 100%;
+    margin: 5px 0;
+    border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-textarea {
-    resize: vertical;
+    box-sizing: border-box;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #388e3c;
-    border: none;
+    padding: 10px 15px;
+    background-color: #4CAF50;
     color: white;
-    font-size: 16px;
-    border-radius: 5px;
+    border: none;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #2c6f2d;
+    background-color: #45a049;
 }
 
-#plantes-list, #potions-list {
+/* Style pour la liste des plantes et potions */
+ul {
     list-style-type: none;
     padding: 0;
 }
 
-#plantes-list li, #potions-list li {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 10px;
+li {
+    padding: 8px;
+    background-color: white;
+    margin: 5px 0;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-img {
-    max-width: 100px;
-    margin-top: 10px;
-    display: block;
+/* Style pour le tableau de données */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-#ajout-plante, #ajout-potion {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+/* Style de l'alerte */
+.alert {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f9c2c2;
+    color: #d8000c;
+    border: 1px solid #d8000c;
+    border-radius: 5px;
 }
