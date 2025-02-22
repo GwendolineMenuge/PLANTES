@@ -52,7 +52,7 @@ document.getElementById("planteForm").addEventListener("submit", async function(
     // Upload de l'image sur Supabase Storage
     const { data, error } = await supabase.storage.from('images').upload(`plantes/${imagePlante.name}`, imagePlante);
     if (error) {
-        console.error('Erreur lors de l'upload de l'image :', error);
+        console.error('Erreur lors de l\'upload de l\'image :', error);
         return;
     }
     
