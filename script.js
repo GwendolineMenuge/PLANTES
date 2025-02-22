@@ -1,106 +1,65 @@
-// Gestion des onglets
-document.querySelectorAll('.tab-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const tab = button.getAttribute('data-tab');
-        
-        // Changer d'onglet actif
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+// Initialisation de Supabase
+const SUPABASE_URL = 'https://pjmobokqnprbocvuiqmc.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqbW9ib2txbnByYm9jdnVpcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNzYyMDYsImV4cCI6MjA1NTc1MjIwNn0.uwiTLtBP00-v2Ce-MStb3dajDvfUxSeMufwilMg7kP8';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        document.querySelectorAll('.tab-content').forEach(section => {
-            section.classList.remove('active');
-            if (section.id === tab) {
-                section.classList.add('active');
-            }
-        });
+// Fonction pour récupérer et afficher les plantes
+async function fetchPlantes() {
+    const { data, error } = await supabase.from('plantes').select('*').order('nom', { ascending: true });
+    if (error) {
+        console.error('Erreur lors de la récupération des plantes :', error);
+        return;
+    }
+    
+    const plantesList = document.getElementById("plantes-list");
+    plantesList.innerHTML = ""; // Réinitialiser la liste
+
+    data.forEach(plante => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <h3>${plante.nom}</h3>
+            <img src="${plante.image_url}" alt="${plante.nom}" width="100">
+            <p>${plante.description}</p>
+        `;
+        plantesList.appendChild(li);
     });
-});
+}
 
-// Fonction pour ajouter une plante à la liste
-document.getElementById("planteForm").addEventListener("submit", function(e) {
+// Fonction pour ajouter une plante
+async function addPlante(nom, description, imageUrl) {
+    const { error } = await supabase.from('plantes').insert([
+        { nom, description, image_url: imageUrl }
+    ]);
+    if (error) {
+        console.error('Erreur lors de l'ajout de la plante :', error);
+        return;
+    }
+    fetchPlantes(); // Mettre à jour la liste après l'ajout
+}
+
+// Gestion du formulaire d'ajout de plante
+document.getElementById("planteForm").addEventListener("submit", async function(e) {
     e.preventDefault();
-
-    // Récupérer les valeurs du formulaire
     const nomPlante = document.getElementById("planteNom").value;
     const descriptionPlante = document.getElementById("planteDesc").value;
     const imagePlante = document.getElementById("planteImage").files[0];
-
-    // Créer un objet FormData pour l'image
-    const formData = new FormData();
-    formData.append("image", imagePlante);
-
-    // Créer une URL locale pour l'image (à remplacer par un service de stockage si besoin)
-    const imageURL = URL.createObjectURL(imagePlante); // Simule une URL d'image locale
-
-    // Ajouter la plante à la liste
-    const plante = {
-        nom: nomPlante,
-        description: descriptionPlante,
-        image: imageURL
-    };
-
-    // Ajouter la plante à l'affichage
-    addPlanteToList(plante);
-
-    // Réinitialiser le formulaire
+    
+    if (!imagePlante) {
+        alert("Veuillez ajouter une image.");
+        return;
+    }
+    
+    // Upload de l'image sur Supabase Storage
+    const { data, error } = await supabase.storage.from('images').upload(`plantes/${imagePlante.name}`, imagePlante);
+    if (error) {
+        console.error('Erreur lors de l'upload de l'image :', error);
+        return;
+    }
+    
+    const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
+    addPlante(nomPlante, descriptionPlante, imageUrl);
     document.getElementById("planteForm").reset();
 });
 
-// Fonction pour ajouter une potion à la liste
-document.getElementById("potionForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    // Récupérer les valeurs du formulaire
-    const nomPotion = document.getElementById("potionNom").value;
-    const descriptionPotion = document.getElementById("potionDesc").value;
-    const imagePotion = document.getElementById("potionImage").files[0];
-
-    // Créer un objet FormData pour l'image
-    const formData = new FormData();
-    formData.append("image", imagePotion);
-
-    // Créer une URL locale pour l'image (à remplacer par un service de stockage si besoin)
-    const imageURL = URL.createObjectURL(imagePotion); // Simule une URL d'image locale
-
-    // Ajouter la potion à la liste
-    const potion = {
-        nom: nomPotion,
-        description: descriptionPotion,
-        image: imageURL
-    };
-
-    // Ajouter la potion à l'affichage
-    addPotionToList(potion);
-
-    // Réinitialiser le formulaire
-    document.getElementById("potionForm").reset();
-});
-
-// Fonction pour afficher les plantes dans la liste
-function addPlanteToList(plante) {
-    const plantesList = document.getElementById("plantes-list");
-    const li = document.createElement("li");
-
-    li.innerHTML = `
-        <h3>${plante.nom}</h3>
-        <img src="${plante.image}" alt="${plante.nom}" width="100">
-        <p>${plante.description}</p>
-    `;
-    
-    plantesList.appendChild(li);
-}
-
-// Fonction pour afficher les potions dans la liste
-function addPotionToList(potion) {
-    const potionsList = document.getElementById("potions-list");
-    const li = document.createElement("li");
-
-    li.innerHTML = `
-        <h3>${potion.nom}</h3>
-        <img src="${potion.image}" alt="${potion.nom}" width="100">
-        <p>${potion.description}</p>
-    `;
-    
-    potionsList.appendChild(li);
-}
-
+// Charger les plantes au démarrage
+document.addEventListener("DOMContentLoaded", fetchPlantes);
