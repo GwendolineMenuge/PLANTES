@@ -1,4 +1,7 @@
 // Initialisation de Supabase
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.0.0/dist/umd/supabase.min.js"></script>
+<script src="script.js"></script>
+
 const SUPABASE_URL = 'https://pjmobokqnprbocvuiqmc.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqbW9ib2txbnByYm9jdnVpcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNzYyMDYsImV4cCI6MjA1NTc1MjIwNn0.uwiTLtBP00-v2Ce-MStb3dajDvfUxSeMufwilMg7kP8';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
