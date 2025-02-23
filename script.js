@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialisation de Supabase après le chargement du DOM
     const SUPABASE_URL = 'https://pjmobokqnprbocvuiqmc.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqbW9ib2txbnByYm9jdnVpcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNzYyMDYsImV4cCI6MjA1NTc1MjIwNn0.uwiTLtBP00-v2Ce-MStb3dajDvfUxSeMufwilMg7kP8';
-    
+
+    // Initialisation de Supabase
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Fonction pour récupérer et afficher les plantes
@@ -65,5 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Charger les plantes au démarrage
     fetchPlantes();
-});
 
+    // Gestion des onglets
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Désactiver tous les boutons et sections
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Activer le bouton et la section correspondants
+            button.classList.add('active');
+            const tab = button.getAttribute('data-tab');
+            document.getElementById(tab).classList.add('active');
+        });
+    });
+});
