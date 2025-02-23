@@ -31,7 +31,7 @@ async function addPlante(nom, description, imageUrl) {
         { nom, description, image_url: imageUrl }
     ]);
     if (error) {
-        console.error('Erreur lors de l\'ajout de la plante :', error);
+        console.error('Erreur lors de l'ajout de la plante :', error);
         return;
     }
     fetchPlantes(); // Mettre à jour la liste après l'ajout
