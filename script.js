@@ -5,7 +5,7 @@ const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
-    const { data, error } = await supabase.from('Plantes').select('*').order('nom', { ascending: true });
+    const { data, error } = await supabase.from('plantes').select('*').order('nom', { ascending: true });
     if (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
         return;
@@ -27,7 +27,7 @@ async function fetchPlantes() {
 
 // Fonction pour ajouter une plante
 async function addPlante(nom, description, imageUrl) {
-    const { error } = await supabase.from('Plantes').insert([
+    const { error } = await supabase.from('plantes').insert([
         { nom, description, image_url: imageUrl }
     ]);
     if (error) {
@@ -61,5 +61,36 @@ document.getElementById("planteForm").addEventListener("submit", async function(
     document.getElementById("planteForm").reset();
 });
 
+// Fonction pour changer de section (activer/désactiver les boutons et sections)
+function showTab(tabName) {
+    const sections = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+
+    // Masquer toutes les sections
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // Désactiver tous les boutons
+    buttons.forEach(button => {
+        button.classList.remove('active');
+    });
+
+    // Afficher la section active et activer le bouton correspondant
+    document.getElementById(tabName).classList.add('active');
+    document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+}
+
+// Ajouter des écouteurs d'événements pour les boutons de tabulation
+document.querySelectorAll('.tab-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        showTab(button.getAttribute('data-tab'));
+    });
+});
+
 // Charger les plantes au démarrage
-document.addEventListener("DOMContentLoaded", fetchPlantes);
+document.addEventListener("DOMContentLoaded", () => {
+    fetchPlantes();
+    // Afficher la section par défaut (par exemple "plantes")
+    showTab('plantes');
+});
