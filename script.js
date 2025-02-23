@@ -94,3 +94,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Afficher la section par défaut (par exemple "plantes")
     showTab('plantes');
 });
+
