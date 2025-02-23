@@ -5,7 +5,7 @@ const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
-    const { data, error } = await supabase.from('Plantes').select('*').order('nom', { ascending: true });
+    const { data, error } = await supabase.from('plantes').select('*').order('nom', { ascending: true });
     if (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
         return;
@@ -27,7 +27,7 @@ async function fetchPlantes() {
 
 // Fonction pour ajouter une plante
 async function addPlante(nom, description, imageUrl) {
-    const { error } = await supabase.from('Plantes').insert([
+    const { error } = await supabase.from('plantes').insert([
         { nom, description, image_url: imageUrl }
     ]);
     if (error) {
@@ -84,8 +84,7 @@ function showTab(tabName) {
 // Ajouter des écouteurs d'événements pour les boutons de tabulation
 document.querySelectorAll('.tab-btn').forEach(button => {
     button.addEventListener('click', () => {
-        const tabName = button.getAttribute('data-tab');
-        showTab(tabName); // Changer de section
+        showTab(button.getAttribute('data-tab'));
     });
 });
 
@@ -95,3 +94,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Afficher la section par défaut (par exemple "plantes")
     showTab('plantes');
 });
+
