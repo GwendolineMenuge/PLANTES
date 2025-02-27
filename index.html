@@ -40,17 +40,20 @@
         </section>
 
         <section id="ajout-potion" class="tab-content">
-            <h2>➕ Ajouter une Potion</h2>
-            <form id="potionForm">
-                <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-                <textarea id="potionDesc" placeholder="Effets et ingrédients"></textarea>
-                <button type="submit">Ajouter</button>
-            </form>
-        </section>
-    </main>
+    <h2>➕ Ajouter une Potion</h2>
+    <form id="potionForm">
+        <input type="text" id="potionNom" placeholder="Nom de la potion" required>
+        <textarea id="potionDesc" placeholder="Effets et ingrédients"></textarea>
 
-    <!-- Charge la bibliothèque Supabase en premier -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.0.0/dist/umd/supabase.min.js"></script>
+        <label for="potionPlantes">Sélectionnez les plantes :</label>
+        <select id="potionPlantes" multiple required>
+            <!-- Les plantes seront ajoutées dynamiquement ici -->
+        </select>
+
+        <button type="submit">Ajouter</button>
+    </form>
+</section>
+    </main>
 
     <!-- Ensuite, charge ton propre script -->
     <script src="script.js"></script>
