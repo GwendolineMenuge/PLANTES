@@ -1,18 +1,12 @@
 <?php
-$host = 'localhost';
-$dbname = 'planteRP';
-$user = 'root';
-$pass = '';
+$servername = "localhost";
+$username = "root"; // Remplace par ton identifiant MySQL
+$password = ""; // Remplace par ton mot de passe MySQL
+$dbname = "recensement"; // Remplace par ton nom de base de données
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $stmt = $pdo->query("SELECT id, nom FROM plantes");
-    $plantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    echo json_encode($plantes);
-} catch (PDOException $e) {
-    echo json_encode(["error" => $e->getMessage()]);
+if ($conn->connect_error) {
+    die("Connexion échouée: " . $conn->connect_error);
 }
 ?>
