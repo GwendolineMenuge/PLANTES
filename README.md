@@ -1,4 +1,4 @@
-# Recensement des Plantes & Potions
+# 🌿 Recensement des Plantes & Potions 🌿
 
 ## Description
 Ce projet est une application web permettant de recenser des plantes et de créer des potions en utilisant une base de données MySQL. Les utilisateurs peuvent :
