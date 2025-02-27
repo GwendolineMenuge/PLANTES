@@ -69,4 +69,9 @@ Développé par **Gwendoline MENUGE**
 🌱🌿 Bonne exploration botanique ! 🧪✨
 
 ## Badge
+![Static Badge](https://img.shields.io/badge/Status-En%20cours-orange)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5f9ed56d-dce9-4cc2-9c2f-12a6e17ba603/deploy-status)](https://app.netlify.com/sites/recensementplantes/deploys)
+![Version](https://img.shields.io/badge/Version_-1.0-blue)
+![Language](https://img.shields.io/badge/Language-Java_Script-yellow)
+![Database](https://img.shields.io/badge/DataBase-MySQL-blue)
+
