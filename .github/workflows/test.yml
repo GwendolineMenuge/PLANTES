@@ -33,7 +33,7 @@ services:
 
       - name: 🔍 Vérifier la connexion MySQL
         run: |
-    mysql -h 127.0.0.1 -u root -e "SHOW DATABASES;"
+         mysql -h 127.0.0.1 -u root -e "SHOW DATABASES;"
 
 
       - name:  Configurer la base de données
