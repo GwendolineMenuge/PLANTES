@@ -1,0 +1,44 @@
+name: Tests PHP & MySQL
+
+on: 
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+   services:
+  mysql:
+    image: mysql:5.7
+    env:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: recensement
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ""
+    ports:
+      - 3306:3306
+    options: --health-cmd="mysqladmin ping --host=localhost --user=root --password=" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name:  Checkout du repo
+        uses: actions/checkout@v3
+
+      - name:  Installer PHP et MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-cli php-mysql php-curl
+
+      - name:  Vérifier la connexion MySQL
+        run: |
+          mysql -h 127.0.0.1 -u root -proot -e "SHOW DATABASES;"
+
+      - name:  Configurer la base de données
+        run: |
+          mysql -h 127.0.0.1 -u root -proot test_db < db/schema.sql
+
+      - name:  Lancer les tests PHPUnit
+        run: |
+          php vendor/bin/phpunit tests/
