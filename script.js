@@ -13,6 +13,7 @@ async function fetchPlantes() {
                 <h3>${plante.nom}</h3>
                 <img src="${plante.image_url}" alt="${plante.nom}" width="100">
                 <p>${plante.description}</p>
+                <p>${plante.effet}</p>
             `;
             plantesList.appendChild(li);
         });
