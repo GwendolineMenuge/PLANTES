@@ -4,6 +4,7 @@ require 'db_connect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['planteNom'];
     $description = $_POST['planteDesc'];
+    $effet = $_POST['planteUtilis'];
     $imageUrl = '';
 
     if (!empty($_FILES['planteImage']['name'])) {
@@ -19,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $stmt = $conn->prepare("INSERT INTO Plante (nom, description, image_url) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $nom, $description, $imageUrl);
+    $stmt = $conn->prepare("INSERT INTO Plante (nom, description, effet, image_url) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $nom, $description, $effet, $imageUrl);
 
     if ($stmt->execute()) {
         echo json_encode(["success" => true]);
