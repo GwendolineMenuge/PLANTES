@@ -29,6 +29,7 @@
             <form id="planteForm" enctype="multipart/form-data">
                 <input type="text" id="planteNom" placeholder="Nom de la plante" required>
                 <textarea id="planteDesc" placeholder="Description" required></textarea>
+                 <textarea id="planteUtilis" placeholder="Effets"></textarea>
                 <input type="file" id="planteImage" accept="image/*" required>
                 <button type="submit">Ajouter</button>
             </form>
@@ -43,19 +44,16 @@
     <h2>➕ Ajouter une Potion</h2>
     <form id="potionForm">
         <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-        <textarea id="potionDesc" placeholder="Effets et ingrédients"></textarea>
+        <textarea id="potionDesc" placeholder="Effets"></textarea>
 
         <label for="potionPlantes">Sélectionnez les plantes :</label>
         <select id="potionPlantes" multiple required>
-            <!-- Les plantes seront ajoutées dynamiquement ici -->
         </select>
 
         <button type="submit">Ajouter</button>
     </form>
 </section>
     </main>
-
-    <!-- Ensuite, charge ton propre script -->
     <script src="script.js"></script>
 </body>
 </html>
