@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="tests/bootstrap.php">
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./.github/workflows</directory>  
+        <testsuite name="Unit Tests">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
-
-    <logging>
-        <log type="coverage-html" target="build/coverage"/>
-    </logging>
 </phpunit>
