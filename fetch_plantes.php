@@ -1,7 +1,7 @@
 <?php
 require 'ConnecxionBDD'; // Fichier pour la connexion à la BDD
 
-$sql = "SELECT * FROM Plante ORDER BY nom ASC";
+$sql = "SELECT * FROM plantes ORDER BY nom ASC";
 $result = $conn->query($sql);
 
 $plantes = [];
