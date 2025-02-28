@@ -5,10 +5,10 @@ class PlanteTest extends TestCase
 {
     protected $pdo;
 
-    protected function setUp(): void
-    {
-        $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=test_db', 'root', 'root');
-    }
+   protected function setUp(): void
+{
+    $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=test_db', 'root', '');
+}
 
     public function testAjoutPlante()
     {
