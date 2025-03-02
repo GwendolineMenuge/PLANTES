@@ -1,67 +1,80 @@
-// Fonction pour récupérer et afficher les plantes depuis MySQL
+// Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
     try {
-        const response = await fetch('fetch_plantes.php');
-        const data = await response.json();
+        const response = await fetch("fetch_plantes.php"); // Fichier PHP qui retourne les plantes
+        const text = await response.text(); // Récupère la réponse sous forme de texte brut
+        
+        // Vérification si la réponse est en JSON valide
+        try {
+            const data = JSON.parse(text);
+            if (!response.ok) throw new Error(data.message || "Erreur inconnue");
 
-        const plantesList = document.getElementById("plantes-list");
-        plantesList.innerHTML = ""; // Réinitialiser la liste
+            const plantesList = document.getElementById("plantes-list");
+            plantesList.innerHTML = ""; // Réinitialiser la liste
 
-        data.forEach(plante => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-                <h3>${plante.nom}</h3>
-                <img src="${plante.image_url}" alt="${plante.nom}" width="100">
-                <p>${plante.description}</p>
-                <p>${plante.effet}</p>
-            `;
-            plantesList.appendChild(li);
-        });
+            data.forEach(plante => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <h3>${plante.nom}</h3>
+                    <img src="${plante.image_url}" alt="${plante.nom}" width="100">
+                    <p>${plante.description}</p>
+                `;
+                plantesList.appendChild(li);
+            });
+        } catch (jsonError) {
+            console.error("Erreur de parsing JSON :", text); // Affiche la réponse brute en cas de problème
+        }
     } catch (error) {
-        console.error('Erreur lors de la récupération des plantes :', error);
+        console.error("Erreur lors de la récupération des plantes :", error);
     }
 }
 
-// Gestion du formulaire d'ajout de plante
-document.getElementById("planteForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+// Fonction pour ajouter une plante
+async function addPlante(event) {
+    event.preventDefault();
 
-    const formData = new FormData(this);
+    const formData = new FormData(document.getElementById("planteForm"));
 
     try {
-        const response = await fetch('add_plante.php', {
-            method: 'POST',
+        const response = await fetch("add_plante.php", {
+            method: "POST",
             body: formData
         });
 
-        const result = await response.json();
+        const text = await response.text(); // Récupère la réponse sous forme de texte brut
 
-        if (result.success) {
-            fetchPlantes(); // Mettre à jour la liste
+        // Vérification si la réponse est JSON valide
+        try {
+            const result = JSON.parse(text);
+            if (!result.success) throw new Error(result.message || "Erreur inconnue");
+
+            alert("Plante ajoutée avec succès !");
             document.getElementById("planteForm").reset();
-        } else {
-            alert('Erreur : ' + result.message);
+            fetchPlantes(); // Rafraîchit la liste des plantes
+        } catch (jsonError) {
+            console.error("Réponse invalide :", text);
         }
     } catch (error) {
-        console.error('Erreur lors de l\'ajout de la plante :', error);
+        console.error("Erreur lors de l'ajout de la plante :", error);
     }
-});
+}
 
-// Fonction pour changer d'onglet
+// Écouteur d'événement pour soumission du formulaire
+document.getElementById("planteForm").addEventListener("submit", addPlante);
+
+// Fonction pour changer de section (activer/désactiver les boutons et sections)
 function showTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(section => {
-        section.classList.remove('active');
-    });
+    const sections = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
 
-    document.querySelectorAll('.tab-btn').forEach(button => {
-        button.classList.remove('active');
-    });
+    sections.forEach(section => section.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('active'));
 
     document.getElementById(tabName).classList.add('active');
     document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
 }
 
-// Gestion des boutons pour changer de section
+// Ajouter des écouteurs d'événements pour les boutons de tabulation
 document.querySelectorAll('.tab-btn').forEach(button => {
     button.addEventListener('click', () => {
         showTab(button.getAttribute('data-tab'));
