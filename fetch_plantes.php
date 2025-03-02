@@ -1,22 +1,11 @@
 <?php
-require 'ConnecxionBDD.php'; // Assure-toi que le nom du fichier est correct
-
-// Définir le bon type de réponse
 header('Content-Type: application/json');
 
-$sql = "SELECT * FROM plantes ORDER BY nom ASC";
-$result = $conn->query($sql);
+$plantes = [
+    ["id" => 1, "nom" => "Menthe", "description" => "Apaise l’estomac", "image_url" => "https://via.placeholder.com/100"],
+    ["id" => 2, "nom" => "Camomille", "description" => "Favorise le sommeil", "image_url" => "https://via.placeholder.com/100"],
+    ["id" => 3, "nom" => "Thym", "description" => "Antiseptique naturel", "image_url" => "https://via.placeholder.com/100"]
+];
 
-if (!$result) {
-    echo json_encode(["success" => false, "message" => "Erreur SQL : " . $conn->error]);
-    exit;
-}
-
-$plantes = [];
-while ($row = $result->fetch_assoc()) {
-    $plantes[] = $row;
-}
-
-// Vérifie si la réponse est bien un JSON
 echo json_encode($plantes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 ?>
