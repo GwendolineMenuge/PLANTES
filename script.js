@@ -1,33 +1,38 @@
 // Fonction pour récupérer et afficher les plantes
+// Fonction pour récupérer et afficher les plantes depuis la BDD
 async function fetchPlantes() {
     try {
-        const response = await fetch("fetch_plantes.php"); // Fichier PHP qui retourne les plantes
-        const text = await response.text(); // Récupère la réponse sous forme de texte brut
-        
-        // Vérification si la réponse est en JSON valide
-        try {
-            const data = JSON.parse(text);
-            if (!response.ok) throw new Error(data.message || "Erreur inconnue");
+        const response = await fetch('fetch_plantes.php'); // Assurez-vous que ce fichier PHP est bien accessible
+        const data = await response.json();
 
-            const plantesList = document.getElementById("plantes-list");
-            plantesList.innerHTML = ""; // Réinitialiser la liste
-
-            data.forEach(plante => {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <h3>${plante.nom}</h3>
-                    <img src="${plante.image_url}" alt="${plante.nom}" width="100">
-                    <p>${plante.description}</p>
-                `;
-                plantesList.appendChild(li);
-            });
-        } catch (jsonError) {
-            console.error("Erreur de parsing JSON :", text); // Affiche la réponse brute en cas de problème
+        if (!response.ok) {
+            throw new Error(`Erreur serveur: ${response.status}`);
         }
+
+        if (!Array.isArray(data)) {
+            throw new Error("Réponse inattendue du serveur");
+        }
+
+        const plantesList = document.getElementById("plantes-list");
+        plantesList.innerHTML = ""; // Réinitialiser la liste avant d'afficher les nouvelles plantes
+
+        data.forEach(plante => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <h3>${plante.nom}</h3>
+                <img src="${plante.image_url}" alt="${plante.nom}" width="100">
+                <p>${plante.description}</p>
+            `;
+            plantesList.appendChild(li);
+        });
+
     } catch (error) {
-        console.error("Erreur lors de la récupération des plantes :", error);
+        console.error('Erreur lors de la récupération des plantes :', error);
     }
 }
+
+// Charger les plantes au démarrage
+document.addEventListener("DOMContentLoaded", fetchPlantes);
 
 // Fonction pour ajouter une plante
 async function addPlante(event) {
