@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require 'db_connect.php';
+require 'ConnecxionBDD.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si les données sont bien envoyées
@@ -10,10 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Récupérer les données du formulaire
-    $nom = $_POST['planteNom'];
-    $description = $_POST['planteDesc'];
-    $effet = $_POST['planteUtilis'];
+    $nom = trim($_POST['planteNom']);
+    $description = trim($_POST['planteDesc']);
+    $effet = trim($_POST['planteUtilis']);
     $imageUrl = ''; // Initialisation de la variable imageUrl
+
+    // Vérification basique de la validité des données
+    if (empty($nom) || empty($description) || empty($effet)) {
+        echo json_encode(["success" => false, "message" => "Tous les champs doivent être remplis"]);
+        exit;
+    }
 
     // Vérifier l'upload d'image
     if (!empty($_FILES['planteImage']['name'])) {
@@ -25,6 +31,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Récupérer le nom du fichier et son chemin
         $fileName = basename($_FILES["planteImage"]["name"]);
         $targetFilePath = $targetDir . $fileName;
+
+        // Vérifier l'extension du fichier (ex: .jpg, .png)
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            echo json_encode(["success" => false, "message" => "Extension de fichier non autorisée"]);
+            exit;
+        }
+
+        // Vérifier la taille du fichier (ex : maximum 5 Mo)
+        if ($_FILES["planteImage"]["size"] > 5 * 1024 * 1024) { 
+            echo json_encode(["success" => false, "message" => "Le fichier est trop lourd. La taille maximale est de 5 Mo."]);
+            exit;
+        }
 
         // Vérifier si le fichier est bien téléchargé
         if (move_uploaded_file($_FILES["planteImage"]["tmp_name"], $targetFilePath)) {
