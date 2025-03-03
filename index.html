@@ -19,41 +19,57 @@
     </header>
 
     <main>
+        <!-- Liste des Plantes -->
         <section id="plantes" class="tab-content active">
             <h2>🌱 Liste des Plantes</h2>
             <ul id="plantes-list"></ul>
         </section>
 
+        <!-- Formulaire d'ajout de Plante -->
         <section id="ajout-plante" class="tab-content">
             <h2>➕ Ajouter une Plante</h2>
             <form id="planteForm" enctype="multipart/form-data">
-                <input type="text" id="planteNom" placeholder="Nom de la plante" required>
-                <textarea id="planteDesc" placeholder="Description" required></textarea>
-                 <textarea id="planteUtilis" placeholder="Effets"></textarea>
-                <input type="file" id="planteImage" accept="image/*" required>
+                <label for="planteNom">Nom de la plante :</label>
+                <input type="text" id="planteNom" name="planteNom" placeholder="Nom de la plante" required>
+
+                <label for="planteDesc">Description :</label>
+                <textarea id="planteDesc" name="planteDesc" placeholder="Description" required></textarea>
+
+                <label for="planteUtilis">Effets :</label>
+                <textarea id="planteUtilis" name="planteUtilis" placeholder="Effets"></textarea>
+
+                <label for="planteImage">Image :</label>
+                <input type="file" id="planteImage" name="planteImage" accept="image/*" required>
+
                 <button type="submit">Ajouter</button>
             </form>
         </section>
 
+        <!-- Liste des Potions -->
         <section id="potions" class="tab-content">
             <h2>🧪 Liste des Potions</h2>
             <ul id="potions-list"></ul>
         </section>
 
+        <!-- Formulaire d'ajout de Potion -->
         <section id="ajout-potion" class="tab-content">
-    <h2>➕ Ajouter une Potion</h2>
-    <form id="potionForm">
-        <input type="text" id="potionNom" placeholder="Nom de la potion" required>
-        <textarea id="potionDesc" placeholder="Effets"></textarea>
+            <h2>➕ Ajouter une Potion</h2>
+            <form id="potionForm">
+                <label for="potionNom">Nom de la potion :</label>
+                <input type="text" id="potionNom" name="potionNom" placeholder="Nom de la potion" required>
 
-        <label for="potionPlantes">Sélectionnez les plantes :</label>
-        <select id="potionPlantes" multiple required>
-        </select>
+                <label for="potionDesc">Effets :</label>
+                <textarea id="potionDesc" name="potionDesc" placeholder="Effets"></textarea>
 
-        <button type="submit">Ajouter</button>
-    </form>
-</section>
+                <label for="potionPlantes">Sélectionnez les plantes :</label>
+                <select id="potionPlantes" name="potionPlantes[]" multiple required>
+                </select>
+
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
