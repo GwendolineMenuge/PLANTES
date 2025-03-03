@@ -1,13 +1,22 @@
 <?php
+require 'ConnecxionBDD.php'; // Assure-toi que le fichier connexion BDD est correct
+
+header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-header('Content-Type: application/json');
 
-$plantes = [
-    ["id" => 1, "nom" => "Menthe", "description" => "Apaise l’estomac", "image_url" => "https://via.placeholder.com/100"],
-    ["id" => 2, "nom" => "Camomille", "description" => "Favorise le sommeil", "image_url" => "https://via.placeholder.com/100"],
-    ["id" => 3, "nom" => "Thym", "description" => "Antiseptique naturel", "image_url" => "https://via.placeholder.com/100"]
-];
+$sql = "SELECT * FROM plantes ORDER BY nom ASC";
+$result = $conn->query($sql);
+
+if (!$result) {
+    echo json_encode(["success" => false, "message" => "Erreur SQL : " . $conn->error]);
+    exit;
+}
+
+$plantes = [];
+while ($row = $result->fetch_assoc()) {
+    $plantes[] = $row;
+}
 
 echo json_encode($plantes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 ?>
