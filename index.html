@@ -28,7 +28,7 @@
         <!-- Formulaire d'ajout de Plante -->
         <section id="ajout-plante" class="tab-content">
             <h2>➕ Ajouter une Plante</h2>
-            <form id="planteForm" enctype="multipart/form-data">
+            <form id="planteForm" enctype="multipart/form-data" onsubmit="event.preventDefault(); addPlante();">
                 <label for="planteNom">Nom de la plante :</label>
                 <input type="text" id="planteNom" name="planteNom" placeholder="Nom de la plante" required>
 
@@ -43,6 +43,8 @@
 
                 <button type="submit">Ajouter</button>
             </form>
+            <!-- Zone d'affichage des messages -->
+            <div id="messageZone"></div>
         </section>
 
         <!-- Liste des Potions -->
