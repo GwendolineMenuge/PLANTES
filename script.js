@@ -22,12 +22,13 @@ async function fetchPlantes() {
 async function addPlante(event) {
     event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
 
-     // Validation des champs
-    const planteNom = document.getElementById('planteNom').value;
-    const planteDesc = document.getElementById('planteDesc').value;
+    // Validation des champs
+    const planteNom = document.getElementById('planteNom').value.trim();
+    const planteDesc = document.getElementById('planteDesc').value.trim();
+    const planteUtilis = document.getElementById('planteUtilis').value.trim();
     const planteImage = document.getElementById('planteImage').files[0];
 
-    if (!planteNom || !planteDesc || !planteImage) {
+    if (!planteNom || !planteDesc || !planteUtilis || !planteImage) {
         alert("Tous les champs doivent être remplis !");
         return;
     }
@@ -35,22 +36,27 @@ async function addPlante(event) {
     const formData = new FormData();
     formData.append('planteNom', planteNom);
     formData.append('planteDesc', planteDesc);
-    formData.append('planteUtilis', document.getElementById('planteUtilis').value);
+    formData.append('planteUtilis', planteUtilis);
     formData.append('planteImage', planteImage);
 
     try {
         const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json(); // Ajout du parsing JSON
 
         if (data.success) {
             alert("Plante ajoutée avec succès !");
-
             document.getElementById('planteForm').reset();
+            fetchPlantes(); // Rafraîchir la liste des plantes après ajout
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
     } catch (error) {
         console.error("Erreur lors de l'ajout de la plante :", error);
-        alert("Erreur lors de l'ajout de la plante");
+        alert("Erreur lors de l'ajout de la plante.");
     }
 }
 
