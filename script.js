@@ -15,7 +15,7 @@ async function fetchPlantes() {
             li.innerHTML = `
                 <div class="plante-content">
                     <div class="plante-image">
-                        ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+                       ${plante.image_url ? `<img src="http://localhost/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
                     </div>
                     <div class="plante-description">
                         <h3><strong>${plante.nom}</strong></h3>
