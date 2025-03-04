@@ -1,24 +1,32 @@
 // Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
     try {
-        const response = await fetch('fetch_plantes.php'); 
+        const response = await fetch('fetch_plantes.php');
         if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
-        const data = await response.json();
-        if (!Array.isArray(data)) throw new Error("Réponse inattendue du serveur");
+        // Vérification de la réponse avant de tenter de la parser
+        const text = await response.text();
+        
+        try {
+            const data = JSON.parse(text);
+            if (!Array.isArray(data)) throw new Error("Réponse inattendue du serveur");
 
-        const plantesList = document.getElementById("plantes-list");
-        plantesList.innerHTML = ""; // Réinitialiser la liste
+            const plantesList = document.getElementById("plantes-list");
+            plantesList.innerHTML = ""; // Réinitialiser la liste
 
-        data.forEach(plante => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-                <h3>${plante.nom}</h3>
-                ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-                <p>${plante.description}</p>
-            `;
-            plantesList.appendChild(li);
-        });
+            data.forEach(plante => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <h3>${plante.nom}</h3>
+                    ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+                    <p>${plante.description}</p>
+                `;
+                plantesList.appendChild(li);
+            });
+        } catch (jsonError) {
+            console.error('Erreur de parsing JSON:', jsonError);
+            console.log('Réponse brute du serveur:', text);  // Affiche la réponse brute pour voir ce qui est retourné
+        }
 
     } catch (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
