@@ -1,7 +1,7 @@
 // Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
     try {
-        const response = await fetch('http://localhost:3000/RecensementPlante/fetch_plantes.php'); // Utilisation du proxy sur le port 3000
+        const response = await fetch('http://localhost:3000/RecensementPlante/fetch_plantes.php'); // Pointage vers le serveur proxy
         if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
         const data = await response.json();
@@ -13,7 +13,7 @@ async function fetchPlantes() {
             li.innerHTML = `
                 <h3><strong>${plante.nom}</strong></h3>
                 ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>  <!-- Ajouter des sauts de ligne -->
+                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p> <!-- Ajouter des sauts de ligne -->
                 ${plante.autres_info ? `<p><strong>Autres informations :</strong><br>${plante.autres_info.replace(/\n/g, '<br>')}</p>` : ''}
             `;
             plantesList.appendChild(li);
@@ -26,7 +26,7 @@ async function fetchPlantes() {
 
 // Fonction pour ajouter une plante
 async function addPlante(event) {
-    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
+    event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
 
     const formData = new FormData();
     formData.append('planteNom', document.getElementById('planteNom').value);
@@ -46,7 +46,6 @@ async function addPlante(event) {
             alert("Plante ajoutée avec succès !");
             // Réinitialiser le formulaire après l'ajout
             document.getElementById('planteForm').reset();
-            fetchPlantes(); // Recharger les plantes pour afficher la nouvelle
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
@@ -58,26 +57,29 @@ async function addPlante(event) {
 
 // Changer de section
 function showTab(tabName) {
-    const tab = document.getElementById(tabName); // L'élément avec l'id 'tabName'
-    const button = document.querySelector(`.tab-btn[data-tab="${tabName}"]`); // Le bouton lié à cet id
-
-    if (tab && button) { // Si l'élément existe
+    const tabContent = document.getElementById(tabName);
+    if (tabContent) {
         document.querySelectorAll('.tab-content').forEach(section => section.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
 
-        tab.classList.add('active');
-        button.classList.add('active');
+        tabContent.classList.add('active');
+        document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
     } else {
-        console.error(`L'élément avec l'ID ${tabName} ou son bouton associé n'a pas été trouvé.`);
+        console.error(`L'élément avec l'ID ${tabName} n'a pas été trouvé.`);
     }
 }
 
 // Initialisation
 document.addEventListener("DOMContentLoaded", () => {
-    fetchPlantes();
-    showTab('plantes');
+    fetchPlantes(); // Charge les plantes
+    showTab('plantes'); // Affiche la section des plantes
 
-    document.getElementById("planteForm").addEventListener("submit", addPlante);
+    // Empêcher la soumission du formulaire par défaut
+    const form = document.getElementById("planteForm");
+    if (form) {
+        form.addEventListener("submit", addPlante);
+    }
+
     document.querySelectorAll('.tab-btn').forEach(button => {
         button.addEventListener('click', () => showTab(button.getAttribute('data-tab')));
     });
