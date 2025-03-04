@@ -19,15 +19,32 @@ async function fetchPlantes() {
             plantesList.appendChild(li);
         });
 
+    } catch (error) {
+        console.error('Erreur lors de la récupération des plantes :', error);
+        alert("Une erreur s'est produite lors de la récupération des plantes. Voir la console pour plus de détails.");
+    }
+}
+
 // Fonction pour ajouter une plante
 async function addPlante(event) {
     event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
 
+    // Validation des champs
+    const planteNom = document.getElementById('planteNom').value.trim();
+    const planteDesc = document.getElementById('planteDesc').value.trim();
+    const planteUtilis = document.getElementById('planteUtilis').value.trim();
+    const planteImage = document.getElementById('planteImage').files[0];
+
+    if (!planteNom || !planteDesc || !planteUtilis || !planteImage) {
+        alert("Tous les champs doivent être remplis !");
+        return;
+    }
+
     const formData = new FormData();
-    formData.append('planteNom', document.getElementById('planteNom').value);
-    formData.append('planteDesc', document.getElementById('planteDesc').value);
-    formData.append('planteUtilis', document.getElementById('planteUtilis').value);
-    formData.append('planteImage', document.getElementById('planteImage').files[0]); // Champ de fichier image
+    formData.append('planteNom', planteNom);
+    formData.append('planteDesc', planteDesc);
+    formData.append('planteUtilis', planteUtilis);
+    formData.append('planteImage', planteImage); // Champ de fichier image
 
     try {
         const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
@@ -39,8 +56,8 @@ async function addPlante(event) {
 
         if (data.success) {
             alert("Plante ajoutée avec succès !");
-            // Réinitialiser le formulaire après l'ajout
-            document.getElementById('planteForm').reset();
+            document.getElementById('planteForm').reset(); // Réinitialiser le formulaire après l'ajout
+            fetchPlantes(); // Rafraîchir la liste des plantes après ajout
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
@@ -49,6 +66,7 @@ async function addPlante(event) {
         alert("Erreur lors de l'ajout de la plante");
     }
 }
+
 // Changer de section
 function showTab(tabName) {
     const tabContent = document.getElementById(tabName);
@@ -62,3 +80,19 @@ function showTab(tabName) {
         console.error(`L'élément avec l'ID ${tabName} n'a pas été trouvé.`);
     }
 }
+
+// Initialisation
+document.addEventListener("DOMContentLoaded", () => {
+    fetchPlantes(); // Charge les plantes au chargement de la page
+
+    // Vérifier l'existence du formulaire avant d'attacher l'événement
+    const form = document.getElementById("planteForm");
+    if (form) {
+        form.addEventListener("submit", addPlante);
+    }
+
+    // Ajouter des événements aux boutons de navigation
+    document.querySelectorAll('.tab-btn').forEach(button => {
+        button.addEventListener('click', () => showTab(button.getAttribute('data-tab')));
+    });
+});
