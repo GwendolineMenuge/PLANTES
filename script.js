@@ -19,25 +19,15 @@ async function fetchPlantes() {
             plantesList.appendChild(li);
         });
 
+// Fonction pour ajouter une plante
 async function addPlante(event) {
     event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
 
-    // Validation des champs
-    const planteNom = document.getElementById('planteNom').value.trim();
-    const planteDesc = document.getElementById('planteDesc').value.trim();
-    const planteUtilis = document.getElementById('planteUtilis').value.trim();
-    const planteImage = document.getElementById('planteImage').files[0];
-
-    if (!planteNom || !planteDesc || !planteUtilis || !planteImage) {
-        alert("Tous les champs doivent être remplis !");
-        return;
-    }
-
     const formData = new FormData();
-    formData.append('planteNom', planteNom);
-    formData.append('planteDesc', planteDesc);
-    formData.append('planteUtilis', planteUtilis);
-    formData.append('planteImage', planteImage);
+    formData.append('planteNom', document.getElementById('planteNom').value);
+    formData.append('planteDesc', document.getElementById('planteDesc').value);
+    formData.append('planteUtilis', document.getElementById('planteUtilis').value);
+    formData.append('planteImage', document.getElementById('planteImage').files[0]); // Champ de fichier image
 
     try {
         const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
@@ -45,21 +35,20 @@ async function addPlante(event) {
             body: formData
         });
 
-        const data = await response.json(); // Ajout du parsing JSON
+        const data = await response.json();
 
         if (data.success) {
             alert("Plante ajoutée avec succès !");
+            // Réinitialiser le formulaire après l'ajout
             document.getElementById('planteForm').reset();
-            fetchPlantes(); // Rafraîchir la liste des plantes après ajout
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
     } catch (error) {
         console.error("Erreur lors de l'ajout de la plante :", error);
-        alert("Erreur lors de l'ajout de la plante.");
+        alert("Erreur lors de l'ajout de la plante");
     }
 }
-
 // Changer de section
 function showTab(tabName) {
     const tabContent = document.getElementById(tabName);
