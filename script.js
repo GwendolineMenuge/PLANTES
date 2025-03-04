@@ -11,14 +11,15 @@ async function fetchPlantes() {
         plantesList.innerHTML = ""; // Réinitialiser la liste
 
         data.forEach(plante => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-                <h3>${plante.nom}</h3>
-                ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-                <p>${plante.description}</p>
-            `;
-            plantesList.appendChild(li);
-        });
+    const li = document.createElement("li");
+    li.innerHTML = `
+        <h3><strong>${plante.nom}</strong></h3>
+        ${plante.image_url ? `<img src="http://localhost/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+        <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
+        ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
+    `;
+    plantesList.appendChild(li);
+});
 
     } catch (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
