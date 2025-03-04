@@ -1,60 +1,52 @@
 // Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
     try {
-        const response = await fetch('fetch_plantes.php'); 
+        const response = await fetch('http://localhost:3000/RecensementPlante/fetch_plantes.php'); // Pointage vers le serveur proxy
         if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
         const data = await response.json();
-        if (!Array.isArray(data)) throw new Error("Réponse inattendue du serveur");
-
         const plantesList = document.getElementById("plantes-list");
         plantesList.innerHTML = ""; // Réinitialiser la liste
 
         data.forEach(plante => {
             const li = document.createElement("li");
             li.innerHTML = `
-<<<<<<< HEAD
-                <h3>${plante.nom}</h3>
-                ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-                <p>${plante.description}</p>
-=======
                 <h3><strong>${plante.nom}</strong></h3>
-                ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p> <!-- Ajouter des sauts de ligne -->
+                ${plante.image_url ? `<img src="http://localhost:3000/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
                 ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
->>>>>>> parent of 86261f5 (Update script.js)
             `;
             plantesList.appendChild(li);
         });
 
-    } catch (error) {
-        console.error('Erreur lors de la récupération des plantes :', error);
-    }
-}
-
-// Fonction pour ajouter une plante
 async function addPlante(event) {
-    event.preventDefault();
-    const formData = new FormData(document.getElementById("planteForm"));
+    event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
+
+     // Validation des champs
+    const planteNom = document.getElementById('planteNom').value;
+    const planteDesc = document.getElementById('planteDesc').value;
+    const planteImage = document.getElementById('planteImage').files[0];
+
+    if (!planteNom || !planteDesc || !planteImage) {
+        alert("Tous les champs doivent être remplis !");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('planteNom', planteNom);
+    formData.append('planteDesc', planteDesc);
+    formData.append('planteUtilis', document.getElementById('planteUtilis').value);
+    formData.append('planteImage', planteImage);
 
     try {
-        const response = await fetch("add_plante.php", {
-            method: "POST",
-            body: formData
-        });
+        const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
 
-        const text = await response.text();
-
-        try {
-            const result = JSON.parse(text);
-            if (!result.success) throw new Error(result.message || "Erreur inconnue");
-
+        if (data.success) {
             alert("Plante ajoutée avec succès !");
-            document.getElementById("planteForm").reset();
-            fetchPlantes();
-        } catch (jsonError) {
-            console.error("Réponse invalide :", text);
-            alert("Erreur lors de l'ajout de la plante");
+
+            document.getElementById('planteForm').reset();
+        } else {
+            alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
     } catch (error) {
         console.error("Erreur lors de l'ajout de la plante :", error);
@@ -64,20 +56,14 @@ async function addPlante(event) {
 
 // Changer de section
 function showTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(section => section.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
+    const tabContent = document.getElementById(tabName);
+    if (tabContent) {
+        document.querySelectorAll('.tab-content').forEach(section => section.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
 
-    document.getElementById(tabName).classList.add('active');
-    document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+        tabContent.classList.add('active');
+        document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+    } else {
+        console.error(`L'élément avec l'ID ${tabName} n'a pas été trouvé.`);
+    }
 }
-
-// Initialisation
-document.addEventListener("DOMContentLoaded", () => {
-    fetchPlantes();
-    showTab('plantes');
-
-    document.getElementById("planteForm").addEventListener("submit", addPlante);
-    document.querySelectorAll('.tab-btn').forEach(button => {
-        button.addEventListener('click', () => showTab(button.getAttribute('data-tab')));
-    });
-});
