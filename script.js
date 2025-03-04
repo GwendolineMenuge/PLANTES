@@ -8,16 +8,23 @@ async function fetchPlantes() {
         const plantesList = document.getElementById("plantes-list");
         plantesList.innerHTML = ""; // Réinitialiser la liste
 
-        data.forEach(plante => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-                 <h3><strong>${plante.nom}</strong></h3>
-        ${plante.image_url ? `<img src="http://localhost:3000/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-        <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
-        ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
+       data.forEach(plante => {
+    const li = document.createElement("li");
+    li.classList.add("plante-item"); // Ajouter une classe pour un style personnalisé
+
+    li.innerHTML = `
+        <div class="plante-content">
+            <h3><strong>${plante.nom}</strong></h3>
+            ${plante.image_url ? `<div class="plante-image"><img src="${plante.image_url}" alt="${plante.nom}" width="100"></div>` : ''}
+            <div class="plante-description">
+                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p> <!-- Ajouter des sauts de ligne -->
+                ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
+            </div>
+        </div>
     `;
-            plantesList.appendChild(li);
-        });
+    plantesList.appendChild(li);
+});
+
     } catch (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
         alert("Une erreur s'est produite lors de la récupération des plantes. Voir la console pour plus de détails.");
