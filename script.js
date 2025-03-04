@@ -12,7 +12,7 @@ async function fetchPlantes() {
             const li = document.createElement("li");
             li.innerHTML = `
                 <h3><strong>${plante.nom}</strong></h3>
-                ${plante.image_url ? `<img src="http://localhost:3000/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+               <p style="float:right> ${plante.image_url ? `<img src="http://localhost:3000/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''</p>}
                 <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
                 ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
             `;
