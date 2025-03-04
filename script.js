@@ -1,28 +1,26 @@
-// Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
     try {
-        const response = await fetch('fetch_plantes.php'); 
+        const response = await fetch('http://localhost/RecensementPlante/fetch_plantes.php'); // L'URL vers ton backend local
         if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
         const data = await response.json();
-        if (!Array.isArray(data)) throw new Error("Réponse inattendue du serveur");
-
         const plantesList = document.getElementById("plantes-list");
         plantesList.innerHTML = ""; // Réinitialiser la liste
 
+        // Parcourir et afficher les plantes
         data.forEach(plante => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-        <h3><strong>${plante.nom}</strong></h3>
-        ${plante.image_url ? `<img src="http://localhost/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-        <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
-        ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
-    `;
-    plantesList.appendChild(li);
-});
-
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <h3><strong>${plante.nom}</strong></h3>
+                ${plante.image_url ? `<img src="http://localhost/RecensementPlante/${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
+                ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
+            `;
+            plantesList.appendChild(li);
+        });
     } catch (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
+        alert("Une erreur s'est produite lors de la récupération des plantes.");
     }
 }
 
