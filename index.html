@@ -19,10 +19,10 @@
     </header>
 
     <main>
-        <!-- Liste des Plantes -->
+        <!-- Affichage des plantes -->
         <section id="plantes" class="tab-content active">
             <h2>🌱 Liste des Plantes</h2>
-            <ul id="plantes-list"></ul>
+            <ul id="plantes-list"></ul> <!-- Liste des plantes récupérées -->
         </section>
 
         <!-- Formulaire d'ajout de Plante -->
@@ -45,31 +45,20 @@
             </form>
         </section>
 
-        <!-- Liste des Potions -->
+        <!-- Section pour les potions (si besoin) -->
         <section id="potions" class="tab-content">
             <h2>🧪 Liste des Potions</h2>
-            <ul id="potions-list"></ul>
+            <!-- Contenu des potions à venir -->
         </section>
 
-        <!-- Formulaire d'ajout de Potion -->
+        <!-- Formulaire d'ajout de Potion (si besoin) -->
         <section id="ajout-potion" class="tab-content">
             <h2>➕ Ajouter une Potion</h2>
-            <form id="potionForm">
-                <label for="potionNom">Nom de la potion :</label>
-                <input type="text" id="potionNom" name="potionNom" placeholder="Nom de la potion" required>
-
-                <label for="potionDesc">Effets :</label>
-                <textarea id="potionDesc" name="potionDesc" placeholder="Effets"></textarea>
-
-                <label for="potionPlantes">Sélectionnez les plantes :</label>
-                <select id="potionPlantes" name="potionPlantes[]" multiple required>
-                </select>
-
-                <button type="submit">Ajouter</button>
-            </form>
+            <!-- Formulaire pour ajouter une potion -->
         </section>
     </main>
 
     <script src="script.js"></script>
 </body>
 </html>
+

@@ -73,25 +73,44 @@ ul {
     padding: 0;
 }
 
-li {
+/* Style pour l'élément de plante */
+li.plante-item {
+    display: flex; /* Affiche les éléments enfants sur une ligne */
+    align-items: flex-start; /* Aligne les éléments au début de la ligne */
     margin-bottom: 20px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
 }
 
+.plante-content {
+    display: flex; /* Utilise Flexbox pour aligner l'image et le texte */
+    gap: 20px; /* Espacement entre l'image et le texte */
+    flex-wrap: wrap; /* Permet à l'image et au texte de se réorganiser si nécessaire */
+}
+
+.plante-image {
+    flex-shrink: 0; /* Empêche l'image de se réduire */
+    max-width: 100px; /* Limite la taille de l'image */
+    min-width: 100px; /* Assure que l'image garde cette largeur minimale */
+    height: auto; /* Laisse l'image s'ajuster en fonction de la largeur */
+}
+
+.plante-description {
+    flex-grow: 1; /* Permet au texte de prendre tout l'espace restant */
+    font-size: 16px; /* Taille du texte */
+}
+
+.plante-description h3 {
+    margin-top: 0; /* Enlève la marge du haut du titre */
+    margin-bottom: 10px; /* Un petit espacement sous le titre */
+}
+
+.plante-description p {
+    margin: 0; /* Enlève les marges par défaut autour du texte */
+}
+
 img {
-    max-width: 100%;
+    border-radius: 5px; /* Ajoute un arrondi aux coins de l'image */
+    max-width: 100%; /* Assure que l'image ne dépasse pas la largeur du conteneur */
     height: auto;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #4caf50;
-}
-
-p {
-    color: #333;
 }
