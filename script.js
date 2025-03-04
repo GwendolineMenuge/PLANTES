@@ -8,23 +8,24 @@ async function fetchPlantes() {
         const plantesList = document.getElementById("plantes-list");
         plantesList.innerHTML = ""; // Réinitialiser la liste
 
-       data.forEach(plante => {
-    const li = document.createElement("li");
-    li.classList.add("plante-item"); // Ajouter une classe pour un style personnalisé
+        data.forEach(plante => {
+            const li = document.createElement("li");
+            li.classList.add("plante-item"); // Ajouter la classe plante-item
 
-    li.innerHTML = `
-        <div class="plante-content">
-            <h3><strong>${plante.nom}</strong></h3>
-            ${plante.image_url ? `<div class="plante-image"><img src="${plante.image_url}" alt="${plante.nom}" width="100"></div>` : ''}
-            <div class="plante-description">
-                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p> <!-- Ajouter des sauts de ligne -->
-                ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
-            </div>
-        </div>
-    `;
-    plantesList.appendChild(li);
-});
-
+            li.innerHTML = `
+                <div class="plante-content">
+                    <div class="plante-image">
+                        ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+                    </div>
+                    <div class="plante-description">
+                        <h3><strong>${plante.nom}</strong></h3>
+                        <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>
+                        ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
+                    </div>
+                </div>
+            `;
+            plantesList.appendChild(li);
+        });
     } catch (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
         alert("Une erreur s'est produite lors de la récupération des plantes. Voir la console pour plus de détails.");
@@ -35,21 +36,11 @@ async function fetchPlantes() {
 async function addPlante(event) {
     event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
 
-     // Validation des champs
-    const planteNom = document.getElementById('planteNom').value;
-    const planteDesc = document.getElementById('planteDesc').value;
-    const planteImage = document.getElementById('planteImage').files[0];
-
-    if (!planteNom || !planteDesc || !planteImage) {
-        alert("Tous les champs doivent être remplis !");
-        return;
-    }
-
     const formData = new FormData();
-    formData.append('planteNom', planteNom);
-    formData.append('planteDesc', planteDesc);
+    formData.append('planteNom', document.getElementById('planteNom').value);
+    formData.append('planteDesc', document.getElementById('planteDesc').value);
     formData.append('planteUtilis', document.getElementById('planteUtilis').value);
-    formData.append('planteImage', planteImage);
+    formData.append('planteImage', document.getElementById('planteImage').files[0]); // Champ de fichier image
 
     try {
         const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
@@ -61,6 +52,7 @@ async function addPlante(event) {
 
         if (data.success) {
             alert("Plante ajoutée avec succès !");
+            // Réinitialiser le formulaire après l'ajout
             document.getElementById('planteForm').reset();
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
