@@ -73,12 +73,19 @@ ul {
     padding: 0;
 }
 
+<<<<<<< HEAD
 li {
+=======
+li.plante-item {
+    display: flex; /* Affiche les éléments enfants sur une ligne */
+    align-items: flex-start; /* Aligne les éléments au début de la ligne */
+>>>>>>> parent of a1e01ee (Update style.css)
     margin-bottom: 20px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
 }
 
+<<<<<<< HEAD
 img {
     max-width: 100%;
     height: auto;
@@ -94,4 +101,32 @@ h3 {
 
 p {
     color: #333;
+=======
+.plante-content {
+    display: flex; /* Utiliser flexbox pour aligner l'image et le texte */
+    gap: 15px; /* Espacement entre l'image et le texte */
+    flex-wrap: wrap; /* Pour gérer la taille des éléments si la largeur de l'écran est réduite */
+}
+
+.plante-image {
+    flex-shrink: 0; /* Empêche l'image de se réduire */
+    max-width: 100px; /* Limite la taille maximale de l'image */
+}
+
+.plante-description {
+    flex-grow: 1; /* Permet au texte de prendre tout l'espace restant */
+    padding-left: 10px;
+    font-size: 16px; /* Taille du texte */
+}
+
+.plante-description p {
+    margin: 0; /* Enlève les marges par défaut autour du texte */
+    color: #333;
+}
+
+.plante-description h3 {
+    margin-bottom: 10px; /* Un petit espacement sous le titre */
+    font-size: 18px;
+    color: #4caf50;
+>>>>>>> parent of a1e01ee (Update style.css)
 }
