@@ -31,9 +31,9 @@ async function addPlante(event) {
     const formData = new FormData(document.getElementById("planteForm"));
 
     try {
-        const response = await fetch("add_plante.php", {
-            method: "POST",
-            body: formData
+        const response = await fetch("http://localhost/RecensementPlante/add_plante.php", { 
+    method: "POST", 
+    body: formData 
         });
 
         const text = await response.text();
