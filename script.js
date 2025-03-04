@@ -58,11 +58,18 @@ async function addPlante(event) {
 
 // Changer de section
 function showTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(section => section.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
+    const tab = document.getElementById(tabName); // L'élément avec l'id 'tabName'
+    const button = document.querySelector(`.tab-btn[data-tab="${tabName}"]`); // Le bouton lié à cet id
 
-    document.getElementById(tabName).classList.add('active');
-    document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+    if (tab && button) { // Si l'élément existe
+        document.querySelectorAll('.tab-content').forEach(section => section.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
+
+        tab.classList.add('active');
+        button.classList.add('active');
+    } else {
+        console.error(`L'élément avec l'ID ${tabName} ou son bouton associé n'a pas été trouvé.`);
+    }
 }
 
 // Initialisation
