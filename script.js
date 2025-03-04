@@ -25,35 +25,31 @@ async function fetchPlantes() {
 }
 
 // Fonction pour ajouter une plante
-async function addPlante(event) {
-    event.preventDefault();
-    const formData = new FormData(document.getElementById("planteForm"));
+async function addPlante() {
+    const formData = new FormData();
+    formData.append('planteNom', document.getElementById('planteNom').value);
+    formData.append('planteDesc', document.getElementById('planteDesc').value);
+    formData.append('planteUtilis', document.getElementById('planteUtilis').value);
+    formData.append('planteImage', document.getElementById('planteImage').files[0]); // Champ de fichier image
 
     try {
-        const response = await fetch("http://localhost/RecensementPlante/add_plante.php", { 
-            method: "POST", 
-            body: formData 
+        const response = await fetch('http://localhost/RecensementPlante/add_plante.php', {
+            method: 'POST',
+            body: formData
         });
 
-        const text = await response.text();
-        console.log('Réponse brute de l\'ajout de la plante:', text);  // Affiche la réponse brute dans la console
+        const data = await response.json();
 
-        let result;
-        try {
-            result = JSON.parse(text);  // Tente de parser la réponse
-        } catch (jsonError) {
-            throw new Error('Erreur de parsing JSON lors de l\'ajout de la plante : ' + jsonError.message);
+        if (data.success) {
+            alert("Plante ajoutée avec succès !");
+            // Réinitialiser le formulaire après l'ajout
+            document.getElementById('planteForm').reset();
+        } else {
+            alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
-
-        if (!result.success) throw new Error(result.message || "Erreur inconnue");
-
-        alert("Plante ajoutée avec succès !");
-        document.getElementById("planteForm").reset();
-        fetchPlantes();  // Recharge la liste des plantes après ajout
-
     } catch (error) {
         console.error("Erreur lors de l'ajout de la plante :", error);
-        alert("Erreur lors de l'ajout de la plante. Voir la console pour plus de détails.");
+        alert("Erreur lors de l'ajout de la plante");
     }
 }
 
