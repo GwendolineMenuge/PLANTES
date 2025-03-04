@@ -73,7 +73,6 @@ ul {
     padding: 0;
 }
 
-/* Style pour l'élément de plante */
 li.plante-item {
     display: flex; /* Affiche les éléments enfants sur une ligne */
     align-items: flex-start; /* Aligne les éléments au début de la ligne */
@@ -101,18 +100,11 @@ li.plante-item {
 
 .plante-description p {
     margin: 0; /* Enlève les marges par défaut autour du texte */
+    color: #333;
 }
 
 .plante-description h3 {
     margin-bottom: 10px; /* Un petit espacement sous le titre */
-}
-
-h3 {
-    margin: 0;
     font-size: 18px;
     color: #4caf50;
-}
-
-p {
-    color: #333;
 }
