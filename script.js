@@ -13,9 +13,16 @@ async function fetchPlantes() {
         data.forEach(plante => {
             const li = document.createElement("li");
             li.innerHTML = `
+<<<<<<< HEAD
                 <h3>${plante.nom}</h3>
                 ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
                 <p>${plante.description}</p>
+=======
+                <h3><strong>${plante.nom}</strong></h3>
+                ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
+                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p> <!-- Ajouter des sauts de ligne -->
+                ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
+>>>>>>> parent of 86261f5 (Update script.js)
             `;
             plantesList.appendChild(li);
         });
