@@ -1,7 +1,7 @@
 // Fonction pour récupérer et afficher les plantes
 async function fetchPlantes() {
     try {
-        const response = await fetch('http://localhost/RecensementPlante/fetch_plantes.php'); // Pointage vers ton backend local
+        const response = await fetch('http://localhost:3000/RecensementPlante/fetch_plantes.php'); // Utilisation du proxy sur le port 3000
         if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
         const data = await response.json();
@@ -25,7 +25,9 @@ async function fetchPlantes() {
 }
 
 // Fonction pour ajouter une plante
-async function addPlante() {
+async function addPlante(event) {
+    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
+
     const formData = new FormData();
     formData.append('planteNom', document.getElementById('planteNom').value);
     formData.append('planteDesc', document.getElementById('planteDesc').value);
@@ -33,7 +35,7 @@ async function addPlante() {
     formData.append('planteImage', document.getElementById('planteImage').files[0]); // Champ de fichier image
 
     try {
-        const response = await fetch('http://localhost/RecensementPlante/add_plante.php', {
+        const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
             method: 'POST',
             body: formData
         });
@@ -44,6 +46,7 @@ async function addPlante() {
             alert("Plante ajoutée avec succès !");
             // Réinitialiser le formulaire après l'ajout
             document.getElementById('planteForm').reset();
+            fetchPlantes(); // Recharger les plantes pour afficher la nouvelle
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
         }
