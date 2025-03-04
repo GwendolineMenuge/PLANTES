@@ -14,7 +14,7 @@ async function fetchPlantes() {
                 <h3><strong>${plante.nom}</strong></h3>
                 ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
                 <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p> <!-- Ajouter des sauts de ligne -->
-                ${plante.autres_info ? `<p><strong>Autres informations :</strong><br>${plante.autres_info.replace(/\n/g, '<br>')}</p>` : ''}
+                ${plante.effet ? `<p><strong>Autres informations :</strong><br>${plante.effet.replace(/\n/g, '<br>')}</p>` : ''}
             `;
             plantesList.appendChild(li);
         });
@@ -28,11 +28,21 @@ async function fetchPlantes() {
 async function addPlante(event) {
     event.preventDefault(); // Empêcher l'envoi du formulaire de manière classique
 
+     // Validation des champs
+    const planteNom = document.getElementById('planteNom').value;
+    const planteDesc = document.getElementById('planteDesc').value;
+    const planteImage = document.getElementById('planteImage').files[0];
+
+    if (!planteNom || !planteDesc || !planteImage) {
+        alert("Tous les champs doivent être remplis !");
+        return;
+    }
+
     const formData = new FormData();
-    formData.append('planteNom', document.getElementById('planteNom').value);
-    formData.append('planteDesc', document.getElementById('planteDesc').value);
+    formData.append('planteNom', planteNom);
+    formData.append('planteDesc', planteDesc);
     formData.append('planteUtilis', document.getElementById('planteUtilis').value);
-    formData.append('planteImage', document.getElementById('planteImage').files[0]); // Champ de fichier image
+    formData.append('planteImage', planteImage);
 
     try {
         const response = await fetch('http://localhost:3000/RecensementPlante/add_plante.php', {
@@ -44,7 +54,6 @@ async function addPlante(event) {
 
         if (data.success) {
             alert("Plante ajoutée avec succès !");
-            // Réinitialiser le formulaire après l'ajout
             document.getElementById('planteForm').reset();
         } else {
             alert("Erreur lors de l'ajout de la plante : " + data.message);
