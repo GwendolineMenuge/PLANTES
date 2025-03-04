@@ -4,31 +4,20 @@ async function fetchPlantes() {
         const response = await fetch('http://localhost/RecensementPlante/fetch_plantes.php'); // Pointage vers ton backend local
         if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
-        const text = await response.text();  // Récupère la réponse en texte brut pour vérifier
-        console.log('Réponse brute du serveur:', text);  // Affiche la réponse brute dans la console
-
-        let data;
-        try {
-            data = JSON.parse(text);  // Tente de parser le texte en JSON
-        } catch (jsonError) {
-            throw new Error('Erreur de parsing JSON : ' + jsonError.message);
-        }
-
-        if (!Array.isArray(data)) throw new Error("Réponse inattendue du serveur : doit être un tableau");
-
+        const data = await response.json();
         const plantesList = document.getElementById("plantes-list");
         plantesList.innerHTML = ""; // Réinitialiser la liste
 
         data.forEach(plante => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <h3>${plante.nom}</h3>
+                <h3><strong>${plante.nom}</strong></h3>
                 ${plante.image_url ? `<img src="${plante.image_url}" alt="${plante.nom}" width="100">` : ''}
-                <p>${plante.description}</p>
+                <p><strong>Description :</strong><br>${plante.description.replace(/\n/g, '<br>')}</p>  <!-- Ajouter des sauts de ligne -->
+                ${plante.autres_info ? `<p><strong>Autres informations :</strong><br>${plante.autres_info.replace(/\n/g, '<br>')}</p>` : ''}
             `;
             plantesList.appendChild(li);
         });
-
     } catch (error) {
         console.error('Erreur lors de la récupération des plantes :', error);
         alert("Une erreur s'est produite lors de la récupération des plantes. Voir la console pour plus de détails.");
